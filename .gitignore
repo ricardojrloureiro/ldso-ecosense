@@ -12,6 +12,9 @@
 !/log/.keep
 /tmp
 
+ecosense/log/*
+!ecosense/log/.keep
+ecosense/tmp
 
 *.lock
 
