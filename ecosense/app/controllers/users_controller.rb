@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  # Require authentication for some user actions as the edit profile page
+  #before_filter :logged_in?, only: [:show]
+
   def show
     @user = User.find(params[:id])
   end

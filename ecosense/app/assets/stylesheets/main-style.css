@@ -516,8 +516,35 @@ hr {
 /* Comments on blog detail page */
 @media (min-width: 768px) and (max-width: 979px) {
     }
+
+.about-portrait {
+    float: left;
+    margin-left: 70px;
+    margin-right: 50px;
+    -webkit-border-radius: 180px;
+    -moz-border-radius: 180px;
+    border-radius: 180px;
+    max-width: 100%;
+    height: auto;
+}
+
+.user_info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 @media (max-width: 767px) {
+    .about-portrait {
+        margin-top: -15px;
+        margin-left: 40px;
     }
+
+    .user_info {
+        margin-top: 30px;
+        margin-bottom: 40px;
+    }
+}
+
 /* Add commment form */
 /* About me page */
 @media (max-width: 767px) {
