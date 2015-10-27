@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   post 'login/company' => 'companies#login'
   get 'logout/company' => 'companies#logout'
 
+
   resources :companies
 end

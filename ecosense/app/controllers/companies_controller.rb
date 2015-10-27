@@ -3,7 +3,13 @@ class CompaniesController < ApplicationController
   #before_filter :logged_in?, only: [:show]
 
   def show
+
     @company = Company.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+     flash[:notice] = "Wrong Company ID"
+
+
+
   end
 
   def new
@@ -40,6 +46,7 @@ class CompaniesController < ApplicationController
     log_out
     redirect_to root_url
   end
+
 
   private
 
