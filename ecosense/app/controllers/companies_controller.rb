@@ -14,6 +14,7 @@ class CompaniesController < ApplicationController
 
   def new
     @company = Company.new
+    @categories = Category.all
   end
 
   def create

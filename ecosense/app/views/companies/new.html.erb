@@ -29,6 +29,11 @@
         <%= f.label :password_confirmation, "Confirmation" %>
         <%= f.password_field :password_confirmation, class: 'form-control' %>
 
+        <%= f.label :categories, "Categories" %><br>
+        <%  @categories.each do |category| %>
+            <%= check_box_tag 'categories', category.id %> <%= label_tag category.name %><br>
+        <% end %>
+
         <%= f.submit "Create company", class: "btn btn-primary" %>
     <% end %>
   </div>
