@@ -41,12 +41,8 @@ ActiveRecord::Schema.define(version: 20151027144232) do
     t.string   "name",            limit: 255
     t.string   "email",           limit: 255
     t.string   "password_digest", limit: 255
-    t.string   "phone_number",    limit: 255
-    t.string   "mobile_number",   limit: 255
-    t.text     "about",           limit: 65535
-    t.text     "logo",            limit: 65535
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

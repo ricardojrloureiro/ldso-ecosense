@@ -3,13 +3,9 @@ class CompaniesController < ApplicationController
   #before_filter :logged_in?, only: [:show]
 
   def show
-
     @company = Company.find(params[:id])
     rescue ActiveRecord::RecordNotFound
      flash[:notice] = "Wrong Company ID"
-
-
-
   end
 
   def new
@@ -48,10 +44,9 @@ class CompaniesController < ApplicationController
     redirect_to root_url
   end
 
-
   private
 
-  def user_params
-    params.require(:company).permit(:name, :email, :password, :password_confirmation)
-  end
+    def user_params
+      params.require(:company).permit(:name, :email, :password, :password_confirmation)
+    end
 end

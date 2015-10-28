@@ -5,23 +5,15 @@
         <div class="row">
           <div class="col-md-8">
             <div class="row">
-              <div class="col-md-4 col-sm-4 col-xs-4"  id="company_logo" ><img class="img-thumbnail"src="<%= @company.logo %>"></div>
+              <div class="col-md-4 col-sm-4 col-xs-4"  id="company_logo" ><img class="img-thumbnail"src="<%= get_logo(@company) %>"></div>
               <div class="col-md-6 col-sm-4 col-xs-4" id="name_div" style="margin-top:auto">
                 <h2><%= @company.name %></h2>
-                <span>Address:
-                  <% if @company.address %>
-                      <%= @company.address%>
-                      <% else %>
-                        n/a
-                  <% end %>
+                <span>
+                  Address: <%= get_address(@company) %>
                 </span>
                 <br>
-                <span>Contact:
-                  <% if @company.email %>
-                      <%= @company.email%>
-                      <% else %>
-                      n/a
-                  <% end %>
+                <span>
+                  Contact: <%= get_email(@company) %>
                 </span>
               </div>
             </div>
@@ -38,7 +30,7 @@
           </div>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <%= @company.about %>
+              <%= get_about(@company) %>
             </div>
           </div>
         </div>
