@@ -9,25 +9,28 @@ module UsersHelper
 
   # Returns the User logo
   def get_logo(user)
-    if user.respond_to?(:logo)
-      user.logo
+    default_url = 'http://www.caxtoneditorial.co.uk/en/wp-content/uploads/2012/02/User.png'
+    if user.logo.blank?
+      default_url
     else
-     "http://www.caxtoneditorial.co.uk/en/wp-content/uploads/2012/02/User.png"
+      user.logo
     end
   end
 
   # Returns the User email
   def get_email(user)
-    if user.respond_to?(:email)
-      user.email
-    else
+    if user.email.blank?
       "n/a"
+    else
+      user.email
     end
   end
 
   # Returns the User about
   def get_about(user)
-    if user.respond_to?(:about)
+    if user.about.blank?
+      "n/a"
+    else
       user.about
     end
   end

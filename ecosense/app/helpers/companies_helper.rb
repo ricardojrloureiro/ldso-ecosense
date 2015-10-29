@@ -1,34 +1,37 @@
 module CompaniesHelper
   # Returns the Company logo
   def get_logo(company)
-    if company.respond_to?(:logo)
-      company.logo
+    default_url = 'http://www.caxtoneditorial.co.uk/en/wp-content/uploads/2012/02/User.png'
+    if company.logo.blank?
+      default_url
     else
-      "http://www.caxtoneditorial.co.uk/en/wp-content/uploads/2012/02/User.png"
+      company.logo
     end
   end
 
   # Returns the Company email
   def get_email(company)
-    if company.respond_to?(:email)
-      company.email
-    else
+    if company.email.blank?
       "n/a"
+    else
+      company.email
     end
   end
 
   # Returns the Company email
   def get_address(company)
-    if company.respond_to?(:address)
-      company.address
-    else
+    if company.address.blank?
       "n/a"
+    else
+      company.address
     end
   end
 
   # Returns the Company about
   def get_about(company)
-    if company.respond_to?(:about)
+    if company.about.blank?
+      "n/a"
+    else
       company.about
     end
   end
