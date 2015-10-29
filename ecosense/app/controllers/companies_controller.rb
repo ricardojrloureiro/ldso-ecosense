@@ -16,12 +16,18 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(user_params)
     if @company.save
+      params[:categories].each do |category|
+        @company.categories << Category.find(category)
+      end
+
       log_in @company
       flash[:success] = "Welcome to the EcoSense!"
       redirect_to @company
     else
       render 'new'
     end
+
+
   end
 
   def login_show

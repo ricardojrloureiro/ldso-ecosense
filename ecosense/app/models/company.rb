@@ -1,5 +1,5 @@
 class Company < User
   self.table_name = 'companies'
-
-  has_many :categories
+  has_many :companies_categorizations
+  has_many :categories, through: :companies_categorizations
 end
