@@ -16,6 +16,7 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(user_params)
     if @company.save
+
       params[:categories].each do |category|
         @company.categories << Category.find(category)
       end

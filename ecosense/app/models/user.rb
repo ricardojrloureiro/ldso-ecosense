@@ -9,8 +9,14 @@ class User < ActiveRecord::Base
             format: { with: VALID_EMAIL_REGEX },
             uniqueness: { case_sensitive: false }
 
+  validates :phone_number, :mobile_number, format: { with: /\A(\+\d{3})?\d{9}\z/, message: "must be 9 digits long with optional prefix" },
+                                                     on: [:update]
+
+  validates :about, length: { minimum: 15, maximum: 255 },
+                    on: [:update]
+
   has_secure_password
 
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
 end
