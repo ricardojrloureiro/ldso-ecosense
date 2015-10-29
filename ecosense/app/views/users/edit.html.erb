@@ -1,0 +1,36 @@
+<% provide(:title, 'Edit Profile') %>
+<h1>Edit profile</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for @user, html: { multipart: true } do |f| %>
+        <%= render 'shared/error_messages' %>
+
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+
+        <%= f.label :email %>
+        <%= f.email_field :email, class: 'form-control' %>
+
+        <%= f.label :phone_number %>
+        <%= f.text_field :phone_number, class: 'form-control' %>
+
+        <%= f.label :mobile_number %>
+        <%= f.text_field :mobile_number, class: 'form-control' %>
+
+        <%= f.label :about %>
+        <%= f.text_area :about, class: 'form-control' %>
+
+        <%= f.label :avatar %>
+        <%= f.file_field :avatar %>
+
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+
+        <%= f.label :password_confirmation, "Confirmation" %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
+
+        <%= f.submit "Edit profile", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
