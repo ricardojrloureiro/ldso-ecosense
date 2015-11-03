@@ -5,16 +5,10 @@
         <div class="row">
           <div class="col-md-8">
             <div class="row">
-              <div class="col-md-4 col-sm-4 col-xs-4"  id="company_logo" ><img class="img-thumbnail" src="<%= get_logo(@company) %>"></div>
+              <div class="col-md-4 col-sm-4 col-xs-4"  id="company_logo" ><%= image_tag @company.avatar.url(:thumb) %></div>
               <div class="col-md-6 col-sm-4 col-xs-4" id="name_div" style="margin-top:auto">
                 <h2><%= @company.name %></h2>
-                <span>
-                  Address: <%= get_address(@company) %>
-                </span>
-                <br>
-                <span>
-                  Contact: <%= get_email(@company) %>
-                </span>
+
               </div>
             </div>
           </div>
@@ -30,7 +24,7 @@
           </div>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <%= get_about(@company) %>
+              <%= @company.about %>
             </div>
           </div>
         </div>
@@ -61,11 +55,15 @@
             <h3>Categories</h3>
           </header>
           <div class="body clearfix">
-
             <ul class="tags">
-              <%  @company.categories.each do |category| %>
-                  <li><a href="#"><%= category.name %></a></li>
-              <% end %>
+              <li><a href="#">OpenPGP</a></li>
+              <li><a href="#">Django</a></li>
+              <li><a href="#">Bitcoin</a></li>
+              <li><a href="#">Security</a></li>
+              <li><a href="#">GNU/Linux</a></li>
+              <li><a href="#">Git</a></li>
+              <li><a href="#">Homebrew</a></li>
+              <li><a href="#">Debian</a></li>
             </ul>
           </div>
         </div>
@@ -75,5 +73,5 @@
 </div>
 
 <script>
-        $("#name_div").css('padding-top', $("#company_logo").height());
+    $("#name_div").css('padding-top', $("#company_logo").height());
 </script>

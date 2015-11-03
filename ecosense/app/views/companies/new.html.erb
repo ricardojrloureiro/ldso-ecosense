@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for @company do |f| %>
+    <%= form_for @company, url: user_companies_path(current_user), html: { multipart: true } do |f| %>
         <% if @company.errors.any? %>
             <div id="error_explanation">
               <div class="alert alert-danger">
@@ -28,6 +28,10 @@
 
         <%= f.label :company_number %>
         <%= f.text_field :company_number, class: 'form-control' %>
+
+
+        <%= f.label :avatar %>
+        <%= f.file_field :avatar %>
 
         <%= f.label :categories, "Categories" %><br>
         <%  @categories.each do |category| %>
