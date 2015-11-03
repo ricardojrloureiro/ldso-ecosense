@@ -11,23 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029142844) do
+ActiveRecord::Schema.define(version: 20151029152106) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 255
   end
 
   create_table "companies", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "email",           limit: 255
-    t.string   "password_digest", limit: 255
-    t.string   "phone_number",    limit: 255
-    t.string   "mobile_number",   limit: 255
-    t.string   "address",         limit: 255
-    t.text     "about",           limit: 65535
-    t.text     "logo",            limit: 65535
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer  "user_id",        limit: 4
+    t.string   "name",           limit: 255
+    t.string   "company_number", limit: 255
+    t.string   "address",        limit: 255
+    t.text     "about",          limit: 65535
+    t.text     "logo",           limit: 65535
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "companies_categories", force: :cascade do |t|
@@ -37,11 +35,20 @@ ActiveRecord::Schema.define(version: 20151029142844) do
     t.datetime "updated_at",            null: false
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "company_id", limit: 4
+    t.string   "teaser",     limit: 255
+    t.string   "title",      limit: 255
+    t.text     "content",    limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name",                limit: 255
     t.string   "email",               limit: 255
     t.string   "password_digest",     limit: 255
-    t.string   "phone_number",        limit: 255
     t.string   "mobile_number",       limit: 255
     t.text     "about",               limit: 65535
     t.text     "logo",                limit: 65535

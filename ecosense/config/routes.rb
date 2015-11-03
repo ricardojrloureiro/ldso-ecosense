@@ -6,16 +6,12 @@ Rails.application.routes.draw do
 
   get 'signup'  => 'users#new'
 
-  resources :users
+  resources :users do
+    resources :companies
+  end
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
-  get 'signup/company' => 'companies#new'
-  get 'login/company' => 'companies#login_show'
-  post 'login/company' => 'companies#login'
-  get 'logout/company' => 'companies#logout'
-
-  resources :companies
 end

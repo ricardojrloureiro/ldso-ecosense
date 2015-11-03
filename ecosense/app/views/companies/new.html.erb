@@ -1,9 +1,9 @@
-<% provide(:title, 'Sign up') %>
-<h1>Company Sign up</h1>
+<% provide(:title, 'Create a new company') %>
+<h1>Create a new company</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@company) do |f| %>
+    <%= form_for @company do |f| %>
         <% if @company.errors.any? %>
             <div id="error_explanation">
               <div class="alert alert-danger">
@@ -20,14 +20,14 @@
         <%= f.label :name %>
         <%= f.text_field :name, class: 'form-control' %>
 
-        <%= f.label :email %>
-        <%= f.email_field :email, class: 'form-control' %>
+        <%= f.label :address %>
+        <%= f.text_field :address, class: 'form-control' %>
 
-        <%= f.label :password %>
-        <%= f.password_field :password, class: 'form-control' %>
+        <%= f.label :about %>
+        <%= f.text_area :about, class: 'form-control' %>
 
-        <%= f.label :password_confirmation, "Confirmation" %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
+        <%= f.label :company_number %>
+        <%= f.text_field :company_number, class: 'form-control' %>
 
         <%= f.label :categories, "Categories" %><br>
         <%  @categories.each do |category| %>
