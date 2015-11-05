@@ -17,5 +17,5 @@ As mentioned before the sprint went well being that the only problem that arose 
 
 ## Final Discussion
 
-With the previous agenda items now being complete this affects the next items on the Backlog positively since they are ordered in order of dependency and means the team is on schedule. According to the Backlog and if the current speed and team's efficiency are maintained the team is due to complete the project it was set out to complete in time as long as there are no unexpected occurences. All the implemented features have been sent to the Projct Owner who so far has been satisfied with the work. 
+With the previous agenda items now being complete this affects the next items on the Backlog positively since they are ordered in order of dependency and means the team is on schedule. According to the Backlog and if the current speed and team's efficiency are maintained the team is due to complete the project it was set out to complete in time as long as there are no unexpected occurences. All the implemented features have been sent to the Project Owner who so far has been satisfied with the work. 
 Next is the Sprint Planning Meeting which is already on track since the next sprint's items have been reviewed by the project owner.
