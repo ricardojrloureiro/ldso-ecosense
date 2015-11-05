@@ -13,7 +13,7 @@ As mentioned before this Sprint was a success meaning all the intended items wer
 
 ## About the Sprint
 
-As mentioned before the sprint went well being that the only problem that arose was the PO not being able comunicate with the team due to computer issues that even though are now been fixed wasn't able to attend the meeting being that the review is solely based on the comunication between the SPO and the PO over time and the completion of the estabilished backlog items. As for the team itself no real problems arose besides a minor misunderstanding of how the companies (as users) worked, however the issue was properly adressed being that the project owner was contacted and enlighted the concept so that the team could work on it.
+As mentioned before the sprint went well being that the only problem that arose was the PO not being able comunicate with the team due to computer issues, that even though are now fixed, wasn't able to attend the meeting being that the review is solely based on the comunication between the SPO and the PO over time and the completion of the estabilished backlog items. As for the team itself no real problems arose besides a minor misunderstanding of how the companies (as users) worked, however the issue was properly adressed being that the project owner was contacted and enlighted the concept so that the team could work on it.
 
 ## Final Discussion
 
