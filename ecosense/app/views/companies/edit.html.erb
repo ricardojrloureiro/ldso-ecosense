@@ -1,0 +1,36 @@
+<% provide(:title, 'Edit Company Profile') %>
+<h1>Edit company profile</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for @company, url: user_company_path(current_user,@company), html: { multipart: true } do |f| %>
+        <%= render 'shared/error_messages' %>
+
+        <%= f.label :name %>
+        <%= f.text_field :name, class: 'form-control' %>
+
+        <%= f.label :company_number %>
+        <%= f.email_field :company_number, class: 'form-control' %>
+
+        <%= f.label :address %>
+        <%= f.text_field :address, class: 'form-control' %>
+
+        <%= f.label :about %>
+        <%= f.text_area :about, class: 'form-control' %>
+
+        <%= f.label :avatar %>
+        <%= f.file_field :avatar %>
+
+        <%= f.label :categories, "Categories" %><br>
+        <%  @categories.each do |category| %>
+            <% if @company.categories.include?(category) %>
+                <%= check_box_tag 'categories[]', category.id, :checked => true %> <%= label_tag category.name %><br>
+            <% else %>
+                <%= check_box_tag 'categories[]', category.id %> <%= label_tag category.name %><br>
+            <% end %>
+        <% end %>
+
+        <%= f.submit "Edit company profile", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
