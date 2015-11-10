@@ -22,3 +22,5 @@ ecosense/tmp
 .vagrant
 
 cookbooks
+
+ecosense/public/system/users/avatars/
