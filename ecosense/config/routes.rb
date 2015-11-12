@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get  'admin/dashboard' => 'admin#dashboard'
   get 'admin/companies'  => 'admin#companies'
 
+  post 'like/:id', to: 'posts#like', as: :like
   resources :posts
 
 end

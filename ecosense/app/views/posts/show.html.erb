@@ -1,0 +1,22 @@
+<% provide(:title, @post.title) %>
+<h1><%= @post.title %></h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div><%= @post.content %></div>
+    <button id="like" data-url="<%= like_path(@post.id) %>" class="btn btn-primary"><%= pluralize(@likes.count, 'like') %></button>
+  </div>
+</div>
+
+<script>
+  $("#like").click(function(){
+    var button = $(this);
+    $.ajax({
+      type: "POST",
+      url: $(this).data("url"),
+      success: function(data){
+        button.text(data.likes);
+      }
+    });
+  });
+</script>
