@@ -11,6 +11,10 @@ class AdminController < ApplicationController
   end
 
 
+  def users
+    @users = User.all
+  end
+
   private
 
   def admin_user

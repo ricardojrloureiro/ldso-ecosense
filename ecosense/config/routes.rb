@@ -18,8 +18,9 @@ Rails.application.routes.draw do
   post 'companies/:company_id/disapprove' => 'companies#disapprove', as: 'companies_disapprove'
   post 'companies/:company_id/destroy' => 'companies#destroy', as: 'companies_destroy'
 
-  get  'admin/dashboard' => 'admin#dashboard'
-  get 'admin/companies'  => 'admin#companies'
+  get  'admin/dashboard' => 'admin#dashboard', as:'admin_dashboard'
+  get 'admin/companies'  => 'admin#companies', as:'admin_companies'
+  get 'admin/users'  => 'admin#users', as:'admin_users'
 
   post 'like/:id', to: 'posts#like', as: :like
   resources :posts
