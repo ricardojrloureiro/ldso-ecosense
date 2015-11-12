@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
 
+  post 'companies/:company_id/approve' => 'companies#approve'
+
+  get  'admin/dashboard' => 'admin#dashboard'
+  get 'admin/companies'  => 'admin#companies'
+
   resources :posts
 
 end

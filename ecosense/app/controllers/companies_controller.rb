@@ -54,6 +54,19 @@ class CompaniesController < ApplicationController
     @company = Company.find(params[:id])
   end
 
+
+  def approve
+    company = Company.find(params[:company_id])
+    company.approved = true
+
+    if company.save
+      render json: {company: company, success: true}
+    else
+      render json: {success: false}
+
+    end
+  end
+
   private
 
     def company_params
