@@ -1,0 +1,114 @@
+<div class="widewrapper main">
+  <div class="container">
+    <div class="padding-top"></div>
+    <div class="row">
+      <div class="row">
+        <div class="col-md-12">
+          <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone number</th>
+              <th>Address</th>
+              <th>Created at</th>
+              <th>Approved</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              <% @companies.each do |company| %>
+                <tr>
+                  <td><%= company.name %></td>
+                  <td><%= company.company_number %></td>
+                  <td><%= company.address %></td>
+                  <td><%= company.created_at %></td>
+                  <td class="text-center">
+                    <% if company.approved? %><i style="color:green;" class="fa fa-check"></i><%else%><i style="color:red;" class="fa fa-close"></i><%end%>
+                  </td>
+                  <td>
+                    <% if !company.approved? %>
+                      <button name="company-approve-button" class="btn btn-sm btn-success" data-url="<%= companies_approve_path(company.id) %>" data-toggle="tooltip" data-placement="top" title="Approve company">
+                        <i class="fa fa-check"></i>
+                      </button>
+                    <%else%>
+                        <button name="company-disapprove-button" class="btn btn-sm btn-danger" data-url="<%= companies_disapprove_path(company.id) %>" data-toggle="tooltip" data-placement="top" title="Disapprove company">
+                          <i class="fa fa-close"></i>
+                        </button>
+                    <%end%>
+
+                    <button name="remove-company" class="btn btn-sm btn-danger" data-url="<%= companies_destroy_path(company.id) %>" data-toggle="tooltip" data-placement="top" title="Remove company">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              <% end %>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
+  function changeColumn(button){
+    var _parent = button.closest('td');
+    var tdBefore = _parent.closest('td').prev();
+
+    if(button.html() == '<i class="fa fa-close"></i>')
+    {
+      button.attr("class", "btn btn-sm btn-success");
+      button.html('<i class="fa fa-check"></i>');
+    }
+    else{
+      button.attr("class", "btn btn-sm btn-danger");
+      button.html('<i class="fa fa-close"></i>');
+    }
+
+    if(tdBefore.html() == '<i style="color:green;" class="fa fa-check"></i>'){
+      tdBefore.html('<i style="color:red;" class="fa fa-close"></i>');
+    }else{
+      tdBefore.html('<i style="color:green;" class="fa fa-check"></i>');
+    }
+
+  }
+
+  $("button[name^='company-']").click(function(){
+    var button = $(this);
+    $.ajax({
+      type: "POST",
+      url: $(this).data("url"),
+      success: function(data){
+        if(data.success) {
+          changeColumn(button);
+        }
+        alert(data.msg);
+      }
+    });
+  });
+
+  $("button[name='remove-company']").click(function(){
+    var button = $(this);
+    $.ajax({
+      type: "POST",
+      url: $(this).data("url"),
+      success: function(data){
+        if(data.success) {
+          var _parent = button.closest('tr');
+          _parent.remove();
+        }
+        alert(data.msg);
+
+      }
+    });
+  });
+
+</script>

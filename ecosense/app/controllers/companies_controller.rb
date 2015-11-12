@@ -60,10 +60,31 @@ class CompaniesController < ApplicationController
     company.approved = true
 
     if company.save
-      render json: {company: company, success: true}
+      render json: {company: company, success: true, msg: "Company approved successfully."}
     else
-      render json: {success: false}
+      render json: {success: false, msg: "Company could not be approved."}
 
+    end
+  end
+
+  def disapprove
+    company = Company.find(params[:company_id])
+    company.approved = false
+
+    if company.save
+      render json: {company: company, success: true, msg: "Company disapproved successfully."}
+    else
+      render json: {success: false, msg: "Company could not be disapproved."}
+
+    end
+  end
+
+  def destroy
+    company = Company.find(params[:company_id])
+    if company.destroy
+      render json: {success: true, msg: "Company removed successfully."}
+    else
+      render json: {success: false, msg: "Company could not be removed."}
     end
   end
 
