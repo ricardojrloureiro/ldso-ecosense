@@ -5,12 +5,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    @user = current_user
-    abort @user.inspect
+    post = Post.new(post_params)
+    post.user_id = current_user.id
+    params[:post_as] != 0 ? post.company_id=params[:post_as] : post.company_id = null
+    post.save
 
-    @posts = Post.all
-    render 'static_pages/home'
+    redirect_to root_path
   end
 
   def post_params

@@ -3,7 +3,17 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(:post, url: posts_create_path) do |f| %>
+    <%= form_for(:post, url: posts_path) do |f| %>
+
+        <%= label :post, :user_id , 'Post as ' %>
+        <br>
+        <select id="post_as" name="post_as">
+          <option value="0"> Normal User</option>
+          <%= current_user.companies.each do |company| %>
+              <option value= <%=company.id%>> <%= company.name %> </option>
+          <% end %>
+        </select>
+        <br>
 
         <%= f.label :title %>
         <%= f.text_area :teaser, class: 'form-control' %>
