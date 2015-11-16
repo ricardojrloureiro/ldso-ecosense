@@ -3,18 +3,17 @@
     <div class="row">
       <div class="col-md-8 blog-main">
         <div class="row">
-          <div class="col-md-8">
-            <div class="row">
-              <div class="col-md-4 col-sm-4 col-xs-4"  id="company_logo" ><%= image_tag @user.avatar.url(:thumb) %></div>
-              <div class="col-md-6 col-sm-4 col-xs-4" id="name_div" style="margin-top:auto">
+              <div class="col-md-12" id="company_logo" >
+              <div style="float:left">
+                <%= image_tag @user.avatar.url(:medium) %>
+              </div>
+              <div style="float:left; margin-left: 30px;">
                 <h2><%= @user.name %></h2>
-
                 <span>
                   Contact: <%= get_email(@user) %>
                 </span>
               </div>
             </div>
-          </div>
         </div>
 
         <div class="row horizontal-line">
@@ -74,7 +73,3 @@
     </div>
   </div>
 </div>
-
-<script>
-    $("#name_div").css('padding-top', $("#company_logo").height());
-</script>
