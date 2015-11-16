@@ -38,4 +38,6 @@ class PostsController < ApplicationController
     render json: { success: true, likes: pluralize(post.likes.count, 'like') }
   end
 
+  def c
+
 end
