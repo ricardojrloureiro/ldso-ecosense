@@ -1,33 +1,52 @@
 <% provide(:title, 'Edit Profile') %>
-<h1>Edit profile</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    <h1>Edit profile</h1>
+
     <%= form_for @user, html: { multipart: true } do |f| %>
         <%= render 'shared/error_messages' %>
 
-        <%= f.label :name %>
-        <%= f.text_field :name, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form-control' %>
+        </div>
 
-        <%= f.label :email %>
-        <%= f.email_field :email, class: 'form-control' %>
 
-        <%= f.label :mobile_number %>
-        <%= f.text_field :mobile_number, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :email %>
+            <%= f.email_field :email, class: 'form-control' %>
+        </div>
 
-        <%= f.label :about %>
-        <%= f.text_area :about, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :mobile_number %>
+            <%= f.text_field :mobile_number, class: 'form-control' %>
+        </div>
 
-        <%= f.label :avatar %>
-        <%= f.file_field :avatar %>
+        <div class="form-group">
+            <%= f.label :about %>
+            <%= f.text_area :about, class: 'form-control' %>
+        </div>
 
-        <%= f.label :password %>
-        <%= f.password_field :password, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :avatar %>
+            <%= f.file_field :avatar %>
+        </div>
 
-        <%= f.label :password_confirmation, "Confirmation" %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :password %>
+            <%= f.password_field :password, class: 'form-control' %>
+        </div>
 
-        <%= f.submit "Edit profile", class: "btn btn-primary" %>
+
+        <div class="form-group">
+            <%= f.label :password_confirmation, "Confirmation" %>
+            <%= f.password_field :password_confirmation, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+            <%= f.submit "Edit profile", class: "btn btn-primary" %>
+        </div>
     <% end %>
   </div>
 </div>
