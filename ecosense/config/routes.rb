@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'admin/users'  => 'admin#users', as:'admin_users'
 
   post 'like/:id', to: 'posts#like', as: :like
+  post 'comment/:id', to: 'posts#comment', as: :comment
   resources :posts
 
 end

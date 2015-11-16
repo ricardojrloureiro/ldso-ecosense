@@ -9,6 +9,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @likes = @post.likes
+    @comments = @post.comments
   end
 
   def create
@@ -36,6 +37,18 @@ class PostsController < ApplicationController
       like.save
     end
     render json: { success: true, likes: pluralize(post.likes.count, 'like') }
+  end
+
+  def comment
+    post = Post.find(params[:id])
+    comment = Comment.new
+    comment.user_id = current_user.id
+    comment.post_id = post.id
+    comment.content = params[:content]
+    comment.save
+
+    render json: { success: true, commentAdded: comment }
+
   end
 
 end

@@ -521,9 +521,7 @@ hr {
     }
 @media (max-width: 767px) {
     }
-/* Comments on blog detail page */
-@media (min-width: 768px) and (max-width: 979px) {
-    }
+
 
 .about-portrait {
     float: left;
@@ -741,4 +739,88 @@ hr {
 }
 .social-icon.color-three .inner-circle {
   background-color: #3f8ebd;
+}
+
+
+
+/* Comments on blog detail page */
+aside.comments,
+aside.create-comment {
+    margin-bottom: 100px;
+}
+aside.comments hr,
+aside.create-comment hr {
+    width: 515px;
+    margin-left: auto;
+    margin-right: auto;
+    border-top-color: #ced5db;
+    margin-bottom: 50px;
+}
+@media (min-width: 768px) and (max-width: 979px) {
+    aside.comments hr,
+    aside.create-comment hr {
+        width: 415px;
+    }
+}
+@media (max-width: 767px) {
+    aside.comments hr,
+    aside.create-comment hr {
+        width: 100%;
+    }
+}
+aside.comments h2,
+aside.create-comment h2 {
+    text-align: center;
+    font-weight: normal;
+    margin-bottom: 50px;
+}
+aside.comments h2 i,
+aside.create-comment h2 i {
+    font-size: 36px;
+}
+aside.comments .comment {
+    margin: 50px 0 0 0;
+}
+aside.comments .comment.reply {
+    margin-left: 100px;
+}
+aside.comments .comment header img {
+    max-width: 100px;
+    float: left;
+    border-radius: 100px;
+}
+aside.comments .comment header .meta {
+    margin-left: 100px;
+    font-size: 14px;
+}
+aside.comments .comment header .meta h3 {
+    margin: 10px 0 0 0;
+    line-height: 27px;
+}
+aside.comments .comment header .meta h3 a {
+    color: #5b6268;
+}
+aside.comments .comment header .meta a {
+    color: #55a773;
+}
+aside.comments .comment .body {
+    margin-top: 10px;
+    margin-left: 100px;
+}
+/* Add commment form */
+.create-comment input,
+.contact-form input,
+.create-comment textarea,
+.contact-form textarea {
+    margin-top: 15px;
+}
+.create-comment .btn,
+.contact-form .btn {
+    margin: 15px 0 0 30px;
+    float: right;
+}
+.content,
+.about {
+    padding-top: 36px;
+    padding-bottom: 80px;
 }
