@@ -47,7 +47,7 @@ class PostsController < ApplicationController
     comment.content = params[:content]
     comment.save
 
-    render json: { success: true, commentAdded: comment, userAvatar: comment.user.avatar.url(:medium), userName: comment.user.name }
+    render json: { success: true, commentAdded: comment, userAvatar: comment.user.avatar.url(:medium), userName: comment.user.name, userPath: user_path(comment.user) }
 
   end
 
