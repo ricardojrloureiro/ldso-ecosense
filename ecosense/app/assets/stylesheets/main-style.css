@@ -785,7 +785,7 @@ aside.comments .comment.reply {
     margin-left: 100px;
 }
 aside.comments .comment header img {
-    max-width: 100px;
+    max-width: 70px;
     float: left;
     border-radius: 100px;
 }

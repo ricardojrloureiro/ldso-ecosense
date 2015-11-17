@@ -44,9 +44,9 @@
             <% @comments.each do |comment| %>
                 <article class="comment">
                   <header class="clearfix">
-                    <img src="<%= comment.user.avatar.url(:medium) %>" alt="A Smart Guy" class="avatar">
+                    <img src="<%= comment.user.avatar.url(:medium) %>" alt="User avatar" class="avatar">
                     <div class="meta">
-                      <h3><a href="blog-detail.html#"><%= comment.user.name %></a></h3>
+                      <h3><%= comment.user.name %></h3>
                       <span class="date">
                           <%= comment.created_at %>
                       </span>
@@ -60,6 +60,7 @@
             <% end %>
           </aside>
 
+        <% if logged_in? %>
           <aside class="create-comment" id="create-comment">
             <hr>
 
@@ -73,7 +74,7 @@
             </div>
 
           </aside>
-
+        <% end %>
         </div>
       </div>
     </div>
@@ -100,8 +101,8 @@
       success: function(data){
         $("#comment-body").val('');
         var comment = data.commentAdded;
-        var toAdd = "sim";
-        $("#comments").append(toAdd);
+        commentHtml = '<article class="comment"><header class="clearfix"><img src="' + data.userAvatar + '" alt="User avatar" class="avatar"><div class="meta"><h3>'+ data.userName +'</h3><span class="date">'+ comment.created_at +'</span></div></header><div class="body">'+comment.content+'</div></article>'
+        $("#comments").append(commentHtml);
       }
     });
   });
