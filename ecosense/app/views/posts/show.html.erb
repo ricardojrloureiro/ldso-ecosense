@@ -35,7 +35,11 @@
               <i class="fa fa-thumbs-up"></i>
               <%= pluralize(@likes.count, 'like') %>
           </button>
-          </article>
+
+          <% if current_user.present? && @post.user.id == current_user.id %>
+            <button id="delete-post" data-url="<%= post_path(@post.id) %>" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button>
+          <% end %>
+        </article>
 
           <aside class="comments" id="comments">
             <hr>
@@ -81,6 +85,17 @@
 </div>
 
 <script>
+  $("#delete-post").click(function(){
+    var button = $(this);
+    $.ajax({
+      type: "DELETE",
+      url: $(this).data("url"),
+      success: function(data){
+        alert(data.msg);
+        window.location.href = data.redirect;
+      }
+    });
+  });
   $("#like").click(function(){
     var button = $(this);
     $.ajax({

@@ -6,6 +6,12 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+    render json: {success:true, msg: 'Post deleted successfully.', redirect: root_path }
+  end
+
   def show
     @post = Post.find(params[:id])
     @likes = @post.likes
