@@ -1,8 +1,8 @@
 <% provide(:title, 'Create a new company') %>
-<h1>Create a new company</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    <h1>Create a new company</h1>
     <%= form_for @company, url: user_companies_path(current_user), html: { multipart: true } do |f| %>
         <% if @company.errors.any? %>
             <div id="error_explanation">
@@ -17,28 +17,42 @@
             </div>
         <% end %>
 
-        <%= f.label :name %>
-        <%= f.text_field :name, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: 'form-control' %>
+        </div>
 
-        <%= f.label :address %>
-        <%= f.text_field :address, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :address %>
+            <%= f.text_field :address, class: 'form-control' %>
+        </div>
 
-        <%= f.label :about %>
-        <%= f.text_area :about, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :about %>
+            <%= f.text_area :about, class: 'form-control' %>
+        </div>
 
-        <%= f.label :company_number %>
-        <%= f.text_field :company_number, class: 'form-control' %>
+        <div class="form-group">
+            <%= f.label :company_number %>
+            <%= f.text_field :company_number, class: 'form-control' %>
+        </div>
 
 
-        <%= f.label :avatar %>
-        <%= f.file_field :avatar %>
+        <div class="form-group">
+            <%= f.label :avatar %>
+            <%= f.file_field :avatar %>
+        </div>
 
-        <%= f.label :categories, "Categories" %><br>
-        <%  @categories.each do |category| %>
-            <%= check_box_tag 'categories[]', category.id %> <%= label_tag category.name %><br>
-        <% end %>
+        <div class="form-group">
+            <%= f.label :categories, "Categories" %><br>
+            <%  @categories.each do |category| %>
+                <%= check_box_tag 'categories[]', category.id %> <%= label_tag category.name %><br>
+            <% end %>
+        </div>
 
-        <%= f.submit "Create company", class: "btn btn-primary" %>
+        <div class="form-group">
+            <%= f.submit "Create company", class: "btn btn-primary" %>
+        </div>
     <% end %>
   </div>
 </div>
