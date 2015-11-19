@@ -48,7 +48,7 @@
                     <div class="meta">
                       <h3><a href="<%= user_path(comment.user) %>"><%= comment.user.name %></a></h3>
                       <span class="date">
-                          <%= comment.created_at %>
+                          <%= time_ago_in_words(comment.created_at) %> ago
                       </span>
 
                     </div>
@@ -105,7 +105,7 @@
       success: function(data){
         $("#comment-body").val('');
         var comment = data.commentAdded;
-        commentHtml = '<article class="comment"><header class="clearfix"><img src="' + data.userAvatar + '" alt="User avatar" class="avatar"><div class="meta"><h3><a href="'+ data.userPath +'">'+ data.userName +'</a></h3><span class="date">'+ comment.created_at +'</span></div></header><div class="body">'+comment.content+'</div></article>'
+        commentHtml = '<article class="comment"><header class="clearfix"><img src="' + data.userAvatar + '" alt="User avatar" class="avatar"><div class="meta"><h3><a href="'+ data.userPath +'">'+ data.userName +'</a></h3><span class="date">'+ "just now" + '</span></div></header><div class="body">'+comment.content+'</div></article>'
         $("#comments").append(commentHtml);
       }
     });
