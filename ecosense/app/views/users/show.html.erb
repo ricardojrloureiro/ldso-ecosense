@@ -43,7 +43,27 @@
           </div>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-              Posts
+              <% @user.posts.each do |post| %>
+                  <div class="row">
+                    <div class="col-md-1 col-sm-1"></div>
+                    <div class="col-md-10 col-sm-10">
+                      <article class=" blog-teaser">
+                        <header>
+                          <h3><a href="<%= post_path(post) %>"><%= post.title %></a></h3>
+                          <span class="meta"><%= post.company_id == 0 ? post.user.name : post.company.name%><%= ', ' + time_ago_in_words(post.updated_at) + ' ago' %></span>
+                          <hr>
+                        </header>
+                        <div class="body">
+                          <%= post.teaser %>
+                        </div>
+                        <div class="clearfix">
+                          <a href="<%= post_path(post) %>" class="btn btn-tales-one">Read more</a>
+                        </div>
+                      </article>
+                    </div>
+                    <div class="col-md-1 col-sm-1"></div>
+                  </div>
+              <% end %>
             </div>
           </div>
         </div>
