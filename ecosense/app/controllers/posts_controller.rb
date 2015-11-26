@@ -56,7 +56,32 @@ class PostsController < ApplicationController
     render json: { success: true, commentAdded: comment, userAvatar: comment.user.avatar.url(:medium),
                    userName: comment.user.name, userPath: user_path(comment.user)
            }
+  end
 
+  def comment_destroy
+    comment = Comment.find(params[:id])
+
+    unless current_user.present?
+      render json: { error: true, msg: 'User not logged in.' }
+      return
+    end
+
+
+    if current_user.admin
+      comment.destroy
+
+      render json: { success: true, msg: 'Comment deleted successfully.' }
+      return
+    end
+
+    if comment.user_id != current_user.id
+      render json: { error: true, msg: "You can't delete another user comment"}
+      return
+    else
+      comment.destroy
+
+      render json: { success: true, msg: 'Comment deleted successfully.' }
+    end
   end
 
 end
