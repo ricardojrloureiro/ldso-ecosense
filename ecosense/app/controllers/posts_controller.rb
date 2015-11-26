@@ -27,6 +27,28 @@ class PostsController < ApplicationController
     redirect_to root_path
   end
 
+  def update
+    if current_user.present?
+      post = Post.find(params[:id])
+
+      if current_user.id == post.user_id || current_user.admin
+        post.content = params[:content]
+        post.teaser = params[:teaser]
+        post.title = params[:title]
+
+        post.save
+        render json: {success: true, msg: 'Post updated successfully.' }
+        return
+      end
+
+      render json: { error: true, msg: 'You are not allowed to update this post.' }
+
+    end
+    render json: {error: true, msg: 'User not logged in.' }
+
+  end
+
+
   def post_params
     params.require(:post).permit(:title, :teaser, :content)
   end
@@ -82,6 +104,24 @@ class PostsController < ApplicationController
 
       render json: { success: true, msg: 'Comment deleted successfully.' }
     end
+  end
+
+  def comment_update
+    if current_user.present?
+      comment = Comment.find(params[:id])
+
+      if current_user.id == comment.user_id || current_user.admin
+        comment.content = params[:content]
+        comment.save
+
+        render json: {success: true, msg: 'Comment updated successfully.' }
+        return
+      end
+
+      render json: { error: true, msg: 'You are not allowed to update this comment.' }
+
+    end
+    render json: {error: true, msg: 'User not logged in.' }
   end
 
 end

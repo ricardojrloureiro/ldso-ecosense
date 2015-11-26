@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   post 'like/:id', to: 'posts#like', as: :like
   post 'comment/:id', to: 'posts#comment', as: :comment
   delete 'comment/:id' => 'posts#comment_destroy'
+  put 'comment/:id' => 'posts#comment_update'
 
   resources :posts
 
