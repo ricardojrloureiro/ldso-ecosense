@@ -1,5 +1,17 @@
 <% provide(:title, @post.title) %>
 
+<style>
+
+  #map {
+    height: 384px;
+    width:100%;
+    margin: 1em;
+  }
+</style>
+
+
+<div id="post_location" data-latitude="<%= @post.latitude %>" data-longitude="<%= @post.longitude %>" hidden></div>
+
 <div class="widewrapper main">
   <div class="container">
     <div class="row">
@@ -42,7 +54,9 @@
 
           <div class="body" style="padding: 20px 0 20px 0;">
             <%= @post.content %>
+            <br>
           </div>
+          <div id="map"></div>
 
           <button id="like" data-url="<%= like_path(@post.id) %>" class="btn btn-primary btn-lg">
               <i class="fa fa-thumbs-up"></i>
@@ -282,5 +296,31 @@
 
     });
 
+  initMap();
+  function initMap() {
+
+    var position = {
+      lat: $("#post_location").data("latitude"),
+      lng: $("#post_location").data("longitude")
+    };
+    console.log(position.lat);
+
+    if(position.lat != "" && position.lng != "")
+    {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: position
+      });
+
+      var marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        title: 'Issue position'
+      });
+    }else{
+      $("#map").hide();
+    }
+
+  }
 
 </script>
