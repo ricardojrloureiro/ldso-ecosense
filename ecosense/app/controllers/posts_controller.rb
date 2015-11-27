@@ -50,7 +50,7 @@ class PostsController < ApplicationController
 
 
   def post_params
-    params.require(:post).permit(:title, :teaser, :content, :latitude, :longitude)
+    params.require(:post).permit(:title, :teaser, :content, :latitude, :longitude, :ecological_issue)
   end
 
   def like
