@@ -1,0 +1,13 @@
+language: ruby
+cache: bundler
+rvm:
+	- 2.1.2
+
+env:
+	- DB=mysql
+
+before_script:
+	- mysql -e 'create database myapp_ecosense'
+
+script:
+	- RAILS_ENV=test bundle exec rake --trace db:migrate test
