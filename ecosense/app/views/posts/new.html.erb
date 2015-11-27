@@ -46,6 +46,15 @@
           <%= f.text_area :content, class: 'form-control' %>
         </div>
 
+        <div class="form-group">
+          <%= f.label :latitude %>
+          <%= f.number_field :latitude, class: 'form-control', :step => 'any' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :longitude %>
+          <%= f.number_field :longitude, class: 'form-control', :step => 'any' %>
+        </div>
 
         <div id="floating-panel">
           <input onclick="deleteMarkers();" type=button value="Delete Markers">
@@ -63,6 +72,25 @@
 </div>
 
 <script>
+
+  var latitudeInput = $("#post_latitude");
+  var longitudeInput = $("#post_longitude");
+
+  latitudeInput.change(function(){
+    var position = {
+      lat: parseFloat($(this).val()),
+      lng: parseFloat(longitudeInput.val())
+    };
+
+    placeMarker(position);
+  });
+  longitudeInput.change(function(){
+    var position = {
+      lat: parseFloat(latitudeInput.val()),
+      lng: parseFloat($(this).val())
+    };
+    placeMarker(position);
+  });
 
   var map;
   var marker;
@@ -91,6 +119,7 @@
     clearMarker();
   }
 
+
   function placeMarker(location) {
     if(marker!=null)
       deleteMarkers();
@@ -98,6 +127,8 @@
       position: location,
       map: map
     });
+    map.setCenter(location);
+    updateFormPosition(location);
   }
 
   function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -107,6 +138,10 @@
         'Error: Your browser doesn\'t support geolocation.');
   }
 
+  function updateFormPosition(pos){
+    latitudeInput.val(pos.lat);
+    longitudeInput.val(pos.lng);
+  }
   function initialize() {
     var geocoder = new google.maps.Geocoder();
 
@@ -120,22 +155,21 @@
     });
 
     var infoWindow = new google.maps.InfoWindow({map: map});
-    // Try HTML5 geolocation.
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         var pos = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+
         infoWindow.setPosition(pos);
         infoWindow.setContent('Current location');
-        map.setCenter(pos);
         placeMarker(pos);
       }, function() {
         handleLocationError(true, infoWindow, map.getCenter());
       });
     } else {
-      // Browser doesn't support Geolocation
       handleLocationError(false, infoWindow, map.getCenter());
     }
 
