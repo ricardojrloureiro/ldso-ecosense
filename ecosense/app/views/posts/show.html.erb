@@ -18,42 +18,46 @@
       <div class="col-md-12">
 
         <article class="blog-post">
-
-        <header>
-            <h1><%= @post.title %></h1>
-            <% if @post.ecological_issue %>
+          <br>
+          <% if @post.ecological_issue %>
               <div class="alert alert-warning" role="alert"><i class="fa fa-lg fa-exclamation-triangle"></i> Ecological Issue</div>
-            <% end %>
-            <div class="lead-image">            
+          <% end %>
+          <header>
+            <h1><%= @post.title %></h1>
+            <div class="lead-image">
+
+              <% if @post.avatar.file? %>
+              <%= image_tag @post.avatar.url(:medium) %>
+                  <% end %>
+
               <div class="meta clearfix">
-                  <div class="author" style="float:left;">
-                      <i class="fa fa-user"></i>
-                      <span class="data"><%= @post.user.name %></span>
-                  </div>
-                  <div class="date" style="float:left; margin-left: 10px;">
-                      <i class="fa fa-calendar"></i>
-                      <span class="data"><%= time_ago_in_words(@post.created_at) %> ago</span>
-                  </div>
-                  <div class="comments" style="float:left; margin-left: 10px;">
-                    <i class="fa fa-comments"></i>
-                    <span class="data"><a href="blog-detail.html#comments">26 Comments</a></span>
-                  </div>
-                  <div class="comments" style="float:left; margin-left: 10px;">
-                    <% if current_user.present? && current_user.admin %>
-                    <!-- Single button -->
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Admin Actions <span class="caret"></span>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><a id="delete-post" data-url="<%= post_path(@post.id) %>"><i class="fa fa-trash"></i> Delete Post </a></li>
-                      </ul>
-                    </div>
-                    <% end %>
-                  </div>
+
+                <div class="author">
+                  <i class="fa fa-user"></i>
+                  <span class="data"><%= @post.user.name %></span>
+                </div>
+                <div class="date">
+                  <i class="fa fa-calendar"></i>
+                  <span class="data"><%= time_ago_in_words(@post.created_at) %> ago</span>
+                </div>
+                <div class="comments">
+                  <i class="fa fa-comments"></i>
+                  <span class="data"><a href="blog-detail.html#comments"><%= pluralize(@post.comments.count, 'comment') %></a></span>
+                </div>
               </div>
-          </div>
+            </div>
           </header>
+          <% if current_user.present? && current_user.admin %>
+              <!-- Single button -->
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Admin Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a id="delete-post" data-url="<%= post_path(@post.id) %>"><i class="fa fa-trash"></i> Delete Post </a></li>
+                </ul>
+              </div>
+          <% end %>
 
           <div class="body" style="padding: 20px 0 20px 0;">
             <%= @post.content %>
