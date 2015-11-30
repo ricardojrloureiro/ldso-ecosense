@@ -26,9 +26,6 @@
             <h1><%= @post.title %></h1>
             <div class="lead-image">
 
-              <% if @post.avatar.file? %>
-              <%= image_tag @post.avatar.url(:medium) %>
-                  <% end %>
 
               <div class="meta clearfix">
 
@@ -42,8 +39,13 @@
                 </div>
                 <div class="comments">
                   <i class="fa fa-comments"></i>
-                  <span class="data"><a href="blog-detail.html#comments"><%= pluralize(@post.comments.count, 'comment') %></a></span>
+                  <span class="data"><%= pluralize(@post.comments.count, 'comment') %></span>
                 </div>
+
+
+                <% if @post.avatar.file? %>
+                    <%= image_tag @post.avatar.url(:medium) %>
+                <% end %>
               </div>
             </div>
           </header>
@@ -69,6 +71,23 @@
               <i class="fa fa-thumbs-up"></i>
               <%= pluralize(@likes.count, 'like') %>
           </button>
+
+          <% if current_user.present? %>
+              <% if @shared %>
+                  <button id="share" data-url="<%= share_path(@post.id) %>" class="btn btn-primary btn-lg" style="background-color: green">
+                  <i class="fa"></i>
+                  <span id="share_text"> Shared </span>
+                  </button>
+              <% else %>
+                  <button id="share" data-url="<%= share_path(@post.id) %>" class="btn btn-primary btn-lg">
+                    <i class="fa"></i>
+                    <span id="share_text"> Click to share </span>
+                  </button>
+              <% end %>
+
+          <% end %>
+
+
 
           <% if current_user.present? && @post.user.id == current_user.id %>
               <button id="delete-post" data-url="<%= post_path(@post.id) %>" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button>
@@ -100,7 +119,7 @@
 
           <aside class="comments" id="comments">
             <hr>
-            <h2><i class="fa fa-comments"></i> <%= @comments.count %> comments </h2>
+            <h2><i class="fa fa-comments"></i> <span id="comment_counter"> <%= @comments.count %></span> comments  </h2>
 
             <% @comments.each do |comment| %>
                 <article class="comment">
@@ -190,6 +209,27 @@
   $("#edit_error").hide();
   $("#edit_comment_error").hide();
 
+
+  $("#share").click(function(){
+      $.ajax({
+          type: "POST",
+          data: { },
+          url: $(this).data("url"),
+          success: function(data){
+              if(data.success){
+                  console.log(data);
+                  if(data.message == 'shared') {
+                      $("#share").css("background-color","green");
+                      $("#share_text").html('Shared');
+                  } else {
+                      $("#share").css("background-color","#3071a9");
+                      $("#share_text").html('Click to share');
+                  }
+              }
+          }
+      });
+  });
+
   $("#delete-post").click(function(){
     var button = $(this);
     $.ajax({
@@ -227,6 +267,7 @@
         var comment = data.commentAdded;
         commentHtml = '<article class="comment"><header class="clearfix"><img src="' + data.userAvatar + '" alt="User avatar" class="avatar"><div class="meta"><h3><a href="'+ data.userPath +'">'+ data.userName +'</a></h3><span class="date">'+ "just now" + '</span></div></header><div class="body">'+comment.content+'</div></article>'
         $("#comments").append(commentHtml);
+          $("#comment_counter").text(parseInt($("#comment_counter").html())+1);
       }
     });
   });

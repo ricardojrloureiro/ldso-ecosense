@@ -1,5 +1,14 @@
 class User < ActiveRecord::Base
 
+  #model relationships
+
+  has_many :companies
+  has_many :posts
+  has_many :shares
+  has_many :likes
+
+  #methods
+
   before_save { self.email = email.downcase }
 
   validates :name, presence: true, length: { maximum: 50 }
@@ -24,6 +33,4 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: "200x200>", thumb: "100x100>" }, default_url: "http://www.caxtoneditorial.co.uk/en/wp-content/uploads/2012/02/User.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
-  has_many :companies
-  has_many :posts
 end

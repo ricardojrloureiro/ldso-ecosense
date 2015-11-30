@@ -16,6 +16,13 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @likes = @post.likes
     @comments = @post.comments
+    @shared = false
+
+    if current_user
+      if current_user.shares.where(:post_id => @post.id).count > 0
+        @shared = true
+      end
+    end
   end
 
   def create
@@ -122,6 +129,23 @@ class PostsController < ApplicationController
 
     end
     render json: {error: true, msg: 'User not logged in.' }
+  end
+
+  def share
+    post = Post.find(params[:id])
+    share = Share.where(post_id: post.id, user_id: current_user.id)
+    message = ''
+    if share.present?
+      share.destroy_all
+      message = 'removed'
+    else
+      share = Share.new
+      share.user_id = current_user.id
+      share.post_id = post.id
+      share.save
+      message = 'shared'
+    end
+    render json: { success: true, message: message }
   end
 
 end
