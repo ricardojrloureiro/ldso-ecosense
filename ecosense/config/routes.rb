@@ -23,7 +23,15 @@ Rails.application.routes.draw do
   get 'admin/users'  => 'admin#users', as:'admin_users'
 
   post 'like/:id', to: 'posts#like', as: :like
+  post 'share/:id', to: 'posts#share', as: :share
   post 'comment/:id', to: 'posts#comment', as: :comment
+  delete 'comment/:id' => 'posts#comment_destroy'
+  put 'comment/:id' => 'posts#comment_update'
+
   resources :posts
+
+  #api routes - mobile
+  get 'api/Posts', to: 'api#posts'
+  post 'api/Posts', to: 'api#create'
 
 end

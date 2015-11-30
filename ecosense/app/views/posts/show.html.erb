@@ -1,56 +1,157 @@
 <% provide(:title, @post.title) %>
 
+<style>
+
+  #map {
+    height: 384px;
+    width:100%;
+    margin: 1em;
+  }
+</style>
+
+
+<div id="post_location" data-latitude="<%= @post.latitude %>" data-longitude="<%= @post.longitude %>" hidden></div>
+
 <div class="widewrapper main">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
 
         <article class="blog-post">
-
-        <header>
+          <br>
+          <% if @post.ecological_issue %>
+              <div class="alert alert-warning" role="alert"><i class="fa fa-lg fa-exclamation-triangle"></i> Ecological Issue</div>
+          <% end %>
+          <header>
             <h1><%= @post.title %></h1>
-            <div class="lead-image">            
+            <div class="lead-image">
+
+
               <div class="meta clearfix">
-                  <div class="author" style="float:left;">
-                      <i class="fa fa-user"></i>
-                      <span class="data"><%= @post.user.name %></span>
-                  </div>
-                  <div class="date" style="float:left; margin-left: 10px;">
-                      <i class="fa fa-calendar"></i>
-                      <span class="data"><%= time_ago_in_words(@post.created_at) %> ago</span>
-                  </div>
-                  <div class="comments" style="float:left; margin-left: 10px;">
-                      <i class="fa fa-comments"></i>
-                      <span class="data"><a href="blog-detail.html#comments">26 Comments</a></span>
-                  </div>                                
+
+                <div class="author">
+                  <i class="fa fa-user"></i>
+                  <span class="data"><%= @post.user.name %></span>
+                </div>
+                <div class="date">
+                  <i class="fa fa-calendar"></i>
+                  <span class="data"><%= time_ago_in_words(@post.created_at) %> ago</span>
+                </div>
+                <div class="comments">
+                  <i class="fa fa-comments"></i>
+                  <span class="data"><%= pluralize(@post.comments.count, 'comment') %></span>
+                </div>
+
+
+                <% if @post.avatar.file? %>
+                    <%= image_tag @post.avatar.url(:medium) %>
+                <% end %>
               </div>
-          </div>
+            </div>
           </header>
+          <% if current_user.present? && current_user.admin %>
+              <!-- Single button -->
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Admin Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a id="delete-post" data-url="<%= post_path(@post.id) %>"><i class="fa fa-trash"></i> Delete Post </a></li>
+                </ul>
+              </div>
+          <% end %>
 
           <div class="body" style="padding: 20px 0 20px 0;">
             <%= @post.content %>
+            <br>
           </div>
+          <div id="map"></div>
 
           <button id="like" data-url="<%= like_path(@post.id) %>" class="btn btn-primary btn-lg">
               <i class="fa fa-thumbs-up"></i>
               <%= pluralize(@likes.count, 'like') %>
           </button>
 
-          <% if current_user.present? && @post.user.id == current_user.id %>
-            <button id="delete-post" data-url="<%= post_path(@post.id) %>" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button>
+          <% if current_user.present? %>
+              <% if @shared %>
+                  <button id="share" data-url="<%= share_path(@post.id) %>" class="btn btn-primary btn-lg" style="background-color: green">
+                  <i class="fa"></i>
+                  <span id="share_text"> Shared </span>
+                  </button>
+              <% else %>
+                  <button id="share" data-url="<%= share_path(@post.id) %>" class="btn btn-primary btn-lg">
+                    <i class="fa"></i>
+                    <span id="share_text"> Click to share </span>
+                  </button>
+              <% end %>
+
           <% end %>
+
+
+
+          <% if current_user.present? && @post.user.id == current_user.id %>
+              <button id="delete-post" data-url="<%= post_path(@post.id) %>" class="btn btn-danger btn-lg"><i class="fa fa-trash"></i></button>
+              <button id="edit-post" data-url="<%= post_path(@post.id) %>" class="btn btn-warning btn-lg"><i class="fa fa-pencil"></i></button>
+              <div class="alert alert-danger" role="alert" id="edit_error"></div>
+              <%= form_for(:post, url: post_path(@post.id), :html=> {id: "update-form"}) do |f| %>
+                <div class="form-group">
+                  <%= f.label :title %>
+                  <%= f.text_field :title, class: 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :teaser %>
+                  <%= f.text_area :teaser, class: 'form-control' %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :content %>
+                  <%= f.text_area :content, class: 'form-control' %>
+                </div>
+
+                  <div class="form-group">
+                    <%= f.button "Update post", class: "btn btn-primary", type: "button", id: "update-post" %>
+                  </div>
+              <% end %>
+
+        <% end %>
         </article>
 
           <aside class="comments" id="comments">
             <hr>
-            <h2><i class="fa fa-comments"></i> <%= @comments.count %> comments </h2>
+            <h2><i class="fa fa-comments"></i> <span id="comment_counter"> <%= @comments.count %></span> comments  </h2>
 
             <% @comments.each do |comment| %>
                 <article class="comment">
                   <header class="clearfix">
                     <img src="<%= comment.user.avatar.url(:medium) %>" alt="User avatar" class="avatar">
                     <div class="meta">
-                      <h3><a href="<%= user_path(comment.user) %>"><%= comment.user.name %></a></h3>
+                      <h3><a href="<%= user_path(comment.user) %>"><%= comment.user.name %></a>
+                        <% if current_user.present? && comment.user.id == current_user.id %>
+                            <!-- Comment Options button -->
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li><a id="delete-comment" data-url="<%= comment_path(comment.id) %>">Delete comment</a></li>
+                                <li><a id="update-comment" data-url="<%= comment_path(comment.id) %>" data-toggle="modal" data-target="#editCommentModal">Update comment</a></li>
+                              </ul>
+                            </div>
+                        <% end %>
+                        <% if current_user.present? && current_user.admin %>
+                            <!-- Comment Admin Options button -->
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Admin Options <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu">
+                                <li><a id="delete-comment" data-url="<%= comment_path(comment.id) %>">Delete comment</a></li>
+                              </ul>
+                            </div>
+                        <% end%>
+                      </h3>
+
                       <span class="date">
                           <%= time_ago_in_words(comment.created_at) %> ago
                       </span>
@@ -84,7 +185,51 @@
     </div>
 </div>
 
+<div class="modal fade" id="editCommentModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Comment</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert" id="edit_comment_error"></div>
+        <textarea rows="10" name="comment_message" id="update-comment-body" placeholder="Your thoughts..." class="form-control input-lg"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button id="update-comment-button" data-url="" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <script>
+  $('#update-form').hide();
+  $("#edit_error").hide();
+  $("#edit_comment_error").hide();
+
+
+  $("#share").click(function(){
+      $.ajax({
+          type: "POST",
+          data: { },
+          url: $(this).data("url"),
+          success: function(data){
+              if(data.success){
+                  console.log(data);
+                  if(data.message == 'shared') {
+                      $("#share").css("background-color","green");
+                      $("#share_text").html('Shared');
+                  } else {
+                      $("#share").css("background-color","#3071a9");
+                      $("#share_text").html('Click to share');
+                  }
+              }
+          }
+      });
+  });
+
   $("#delete-post").click(function(){
     var button = $(this);
     $.ajax({
@@ -122,7 +267,108 @@
         var comment = data.commentAdded;
         commentHtml = '<article class="comment"><header class="clearfix"><img src="' + data.userAvatar + '" alt="User avatar" class="avatar"><div class="meta"><h3><a href="'+ data.userPath +'">'+ data.userName +'</a></h3><span class="date">'+ "just now" + '</span></div></header><div class="body">'+comment.content+'</div></article>'
         $("#comments").append(commentHtml);
+          $("#comment_counter").text(parseInt($("#comment_counter").html())+1);
       }
     });
   });
+
+    $("#delete-comment").click(function(){
+      var button = $(this);
+
+      var comment = button.closest('article');
+      $.ajax({
+        type: "DELETE",
+        url: button.data('url'),
+        success: function(data){
+          if(data.success){
+            comment.remove();
+          }
+        }
+
+      });
+    });
+
+    $("#edit-post").click(function(){
+      $("#update-form").toggle();
+    });
+
+    $("#update-post").click(function(){
+      var form_data = {
+        title : $("#post_title").val(),
+        content : $("#post_content").val(),
+        teaser : $("#post_teaser").val()
+      };
+      $.ajax({
+        type: "PUT",
+        data: form_data,
+        url: $("#edit-post").data("url"),
+        success: function(data){
+          if(data.success){
+            location.reload();
+          }else{
+            $("#edit_error").text(data.msg);
+
+            $("#edit_error").toggle();
+
+          }
+        }
+
+      });
+    });
+
+  $("#update-comment").click(function(){
+    var url = $(this).data("url");
+    var comment_body = $(this).closest("article").children("div[class='body']").html();
+
+    $("#update-comment-body").text($.trim(comment_body));
+    $("#update-comment-button").data("url", url);
+  });
+
+    $("#update-comment-button").click(function(){
+        var commentContent = $("#update-comment-body").val();
+
+        var button = $(this);
+        $.ajax({
+          type: "PUT",
+          data: { content: commentContent },
+          url: button.data("url"),
+          success: function(data){
+            if(data.success){
+              location.reload();
+            }else{
+              $("#edit_comment_error").text(data.msg);
+              $("#edit_comment_error").toggle();
+            }
+          }
+        });
+
+    });
+
+  initMap();
+  function initMap() {
+
+    var position = {
+      lat: $("#post_location").data("latitude"),
+      lng: $("#post_location").data("longitude")
+    };
+    console.log(position.lat);
+
+    if(position.lat != "" && position.lng != "")
+    {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: position
+      });
+
+      var marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        title: 'Issue position'
+      });
+    }else{
+      $("#map").hide();
+    }
+
+  }
+
 </script>

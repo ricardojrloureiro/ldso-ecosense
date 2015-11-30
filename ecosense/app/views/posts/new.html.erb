@@ -1,5 +1,20 @@
 <% provide(:title, "Create a new post") %>
 
+<style>
+  #map-container {
+    height: 400px;
+    border-radius: 16px 16px;
+    border-color: #fff;
+    border-style: solid;
+    box-shadow: 2px 2px 10px #B1B1B1;
+    margin-top: 25px;
+    border-width: 7px;
+  }
+  #map {
+    height: 384px;
+    width: 100%;
+  }
+</style>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <h1>Create a new post</h1>
@@ -33,8 +48,163 @@
         </div>
 
         <div class="form-group">
+          <%= f.label :ecological_issue %>?
+          <%= f.check_box :ecological_issue %>
+        </div>
+
+        <div class="form-group">
+          <label>Share location?</label>
+          <input type="checkbox" id="share_location_checkbox" />
+        </div>
+
+        <div id="post_location_selector">
+          <div class="form-group">
+            <%= f.label :latitude %>
+            <%= f.number_field :latitude, class: 'form-control', :step => 'any' %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :longitude %>
+            <%= f.number_field :longitude, class: 'form-control', :step => 'any' %>
+          </div>
+
+          <div id="floating-panel">
+            <input onclick="deleteMarkers();" type=button value="Delete Markers">
+          </div>
+
+          <div id="map-container">
+            <div id="map"></div>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <%= f.label :avatar %>
+          <%= f.file_field :avatar %>
+        </div>
+
+        <div class="form-group">
           <%= f.submit "Create post", class: "btn btn-primary" %>
         </div>
     <% end %>
     </div>
 </div>
+
+<script>
+
+  var latitudeInput = $("#post_latitude");
+  var longitudeInput = $("#post_longitude");
+
+  $("#post_location_selector").hide();
+
+  latitudeInput.change(function(){
+    var position = {
+      lat: parseFloat($(this).val()),
+      lng: parseFloat(longitudeInput.val())
+    };
+
+    placeMarker(position);
+  });
+  longitudeInput.change(function(){
+    var position = {
+      lat: parseFloat(latitudeInput.val()),
+      lng: parseFloat($(this).val())
+    };
+    placeMarker(position);
+  });
+
+  var map;
+  var marker;
+
+  // Adds a marker to the map and push to the array.
+  function addMarker(location) {
+    var marker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+    markers.push(marker);
+  }
+
+  // Sets the map on all markers in the array.
+  function setMapOnAll(mapa) {
+      marker.setMap(mapa);
+  }
+
+  // Removes the markers from the map, but keeps them in the array.
+  function clearMarker() {
+    setMapOnAll(null);
+  }
+
+  // Deletes all markers in the array by removing references to them.
+  function deleteMarkers() {
+    clearMarker();
+  }
+
+
+  function placeMarker(location) {
+    if(marker!=null)
+      deleteMarkers();
+    marker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+    map.setCenter(location);
+    updateFormPosition(location);
+  }
+
+  function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+  }
+
+  function updateFormPosition(pos){
+    latitudeInput.val(pos.lat);
+    longitudeInput.val(pos.lng);
+  }
+  function initialize() {
+    var geocoder = new google.maps.Geocoder();
+
+    map = new google.maps.Map(document.getElementById('map'),{
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 16
+    });
+
+    google.maps.event.addListener(map, 'click', function(event) {
+      placeMarker(event.latLng);
+    });
+
+    var infoWindow = new google.maps.InfoWindow({map: map});
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        infoWindow.setPosition(pos);
+        infoWindow.setContent('Current location');
+        placeMarker(pos);
+      }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+      });
+    } else {
+      handleLocationError(false, infoWindow, map.getCenter());
+    }
+
+  }
+
+    $("#share_location_checkbox").click(function(){
+      if($(this).is(':checked')){
+        $("#post_location_selector").show();
+        initialize();
+
+      }else{
+        $("#post_location_selector").hide();
+        latitudeInput.val(null);
+        longitudeInput.val(null);
+      }
+    })
+</script>
