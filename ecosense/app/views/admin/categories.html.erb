@@ -1,0 +1,77 @@
+<div class="widewrapper main">
+  <div class="container">
+    <div class="padding-top"></div>
+    <div class="row">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Manage Categories</h1>
+        </div>
+      </div>
+
+      <dic class="row">
+        <%= form_for(:category, url: categories_path) do |f| %>
+            <div class="form-group">
+              <%= f.text_field :name, class: 'form-control', placeholder: "New category name" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.submit "Save", class: "btn btn-success btn-sm" %>
+            </div>
+        <%end%>
+      </dic>
+      <div class="row">
+        <div class="col-md-12">
+          <table id="example" class="display" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @categories.each do |category| %>
+                <tr>
+                  <td><%= category.name %></td>
+                  <td>
+                    <button name="remove-category" class="btn btn-sm btn-danger" data-url="<%= category_path(category.id) %>" data-toggle="tooltip" data-placement="top" title="Remove category">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+            <% end %>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
+
+  $("button[name='remove-category']").click(function(){
+    var button = $(this);
+    $.ajax({
+      type: "DELETE",
+      url: $(this).data("url"),
+      success: function(data){
+        if(data.success) {
+          var _parent = button.closest('tr');
+          _parent.remove();
+        }
+        alert(data.msg);
+
+      }
+    });
+  });
+
+</script>
