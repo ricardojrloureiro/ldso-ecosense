@@ -72,16 +72,16 @@
               <%= pluralize(@likes.count, 'like') %>
           </button>
 
-          <% if current_user.present? %>
+          <% if current_user.present? && @post.user_id != current_user.id %>
               <% if @shared %>
-                  <button id="share" data-url="<%= share_path(@post.id) %>" class="btn btn-primary btn-lg" style="background-color: green">
+                  <button id="share" data-url="<%= share_path(@post.id) %>" class="btn btn-success btn-lg" >
                   <i class="fa"></i>
                   <span id="share_text"> Shared </span>
                   </button>
               <% else %>
                   <button id="share" data-url="<%= share_path(@post.id) %>" class="btn btn-primary btn-lg">
                     <i class="fa"></i>
-                    <span id="share_text"> Click to share </span>
+                    <span id="share_text"> Share </span>
                   </button>
               <% end %>
 
@@ -219,11 +219,11 @@
               if(data.success){
                   console.log(data);
                   if(data.message == 'shared') {
-                      $("#share").css("background-color","green");
+                      $("#share").attr("class", "btn btn-success btn-lg");
                       $("#share_text").html('Shared');
                   } else {
-                      $("#share").css("background-color","#3071a9");
-                      $("#share_text").html('Click to share');
+                      $("#share").attr("class", "btn btn-primary btn-lg");
+                      $("#share_text").html('Share');
                   }
               }
           }
