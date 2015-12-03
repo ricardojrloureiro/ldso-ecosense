@@ -31,6 +31,8 @@ class PostsController < ApplicationController
     params[:post_as] != 0 ? post.company_id=params[:post_as] : post.company_id = null
     post.save
 
+    # TODO: return on error
+
     redirect_to root_path
   end
 

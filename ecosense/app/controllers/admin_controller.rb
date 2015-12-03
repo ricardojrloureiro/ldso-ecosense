@@ -15,6 +15,12 @@ class AdminController < ApplicationController
     @users = User.all
   end
 
+
+  def categories
+    @categories = Category.all
+  end
+
+
   private
 
   def admin_user
@@ -22,4 +28,5 @@ class AdminController < ApplicationController
       redirect_to root_url
     end
   end
+
 end

@@ -20,8 +20,6 @@
     <h1>Create a new post</h1>
 
     <%= form_for(:post, url: posts_path) do |f| %>
-        <%= session[:user_id] %>
-
         <div class="form-group">
           <%= label :post, :user_id , 'Post as ' %>
           <select id="post_as" name="post_as">

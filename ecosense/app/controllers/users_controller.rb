@@ -6,6 +6,20 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @categories = Category.all
+
+
+    @posts = []
+    @user.posts.each do |p|
+      @posts.push(p)
+    end
+    @user.shares.each do |s|
+      s.post.created_at = s.created_at
+      @posts.push(s.post)
+    end
+
+    @posts = @posts.sort! { |a,b| a.created_at <=> b.created_at }
+    @posts = @posts.reverse
+
   end
 
   def new

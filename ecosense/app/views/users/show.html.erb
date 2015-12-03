@@ -43,17 +43,20 @@
           </div>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <% @user.posts.reverse_order.each do |post| %>
+              <% @posts.each do |post| %>
                   <div class="row">
                     <div class="col-md-1 col-sm-1"></div>
                     <div class="col-md-10 col-sm-10">
                       <article class=" blog-teaser">
                         <header>
+                          <% if post.user_id != @user.id %>
+                              Shared
+                              <% end %>
                           <h3><a href="<%= post_path(post) %>"><%= post.title %></a></h3>
                           <% if post.ecological_issue %>
                               <p class="text-warning"><i class="fa fa-lg fa-exclamation-triangle"></i> Ecological Issue</p>
                           <% end %>
-                          <span class="meta"><%= post.company_id == 0 ? post.user.name : post.company.name%><%= ', ' + time_ago_in_words(post.updated_at) + ' ago' %></span>
+                          <span class="meta"><%= post.company_id == 0 ? post.user.name : post.company.name%><%= ', ' + time_ago_in_words(post.created_at) + ' ago' %></span>
                           <hr>
                         </header>
                         <div class="body">
@@ -67,34 +70,6 @@
                     <div class="col-md-1 col-sm-1"></div>
                   </div>
               <% end %>
-
-              <% @user.shares.reverse_order.each do |share| %>
-                  <div class="row">
-
-                    <div class="col-md-1 col-sm-1"></div>
-                    <div class="col-md-10 col-sm-10">
-                      <article class=" blog-teaser">
-                        <header>
-                          Shared
-                          <h3><a href="<%= post_path(share.post) %>"><%= share.post.title %></a></h3>
-                          <% if share.post.ecological_issue %>
-                              <p class="text-warning"><i class="fa fa-lg fa-exclamation-triangle"></i> Ecological Issue</p>
-                          <% end %>
-                          <span class="meta"><%= share.post.company_id == 0 ? share.post.user.name : share.post.company.name%><%= ', ' + time_ago_in_words(share.post.updated_at) + ' ago' %></span>
-                          <hr>
-                        </header>
-                        <div class="body">
-                          <%= share.post.teaser %>
-                        </div>
-                        <div class="clearfix">
-                          <a href="<%= post_path(share.post) %>" class="btn btn-tales-one">Read more</a>
-                        </div>
-                      </article>
-                    </div>
-                    <div class="col-md-1 col-sm-1"></div>
-                  </div>
-              <% end %>
-
             </div>
           </div>
         </div>

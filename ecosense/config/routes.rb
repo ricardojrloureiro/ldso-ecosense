@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get  'admin/dashboard' => 'admin#dashboard', as:'admin_dashboard'
   get 'admin/companies'  => 'admin#companies', as:'admin_companies'
   get 'admin/users'  => 'admin#users', as:'admin_users'
+  get 'admin/categories'  => 'admin#categories', as:'admin_categories'
 
   post 'like/:id', to: 'posts#like', as: :like
   post 'share/:id', to: 'posts#share', as: :share
@@ -29,9 +30,12 @@ Rails.application.routes.draw do
   put 'comment/:id' => 'posts#comment_update'
 
   resources :posts
+  resources :categories
 
   #api routes - mobile
-  get 'api/Posts', to: 'api#posts'
-  post 'api/Posts', to: 'api#create'
+  get 'api/posts', to: 'api#posts'
+  post 'api/posts', to: 'api#create'
+  post 'api/posts/:id/like', to: 'api#like'
+  post 'api/posts/:id/share', to: 'api#share'
 
 end
