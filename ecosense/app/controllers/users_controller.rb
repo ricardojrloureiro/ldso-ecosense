@@ -3,6 +3,15 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update]
   before_action :correct_user,   only: [:edit, :update]
 
+  def index
+    search = params[:name]
+    if search == nil
+      search = ''
+    end
+    @users = User.where('name LIKE ?','%'+search+'%')
+    @categories = Category.all
+  end
+
   def show
     @user = User.find(params[:id])
     @categories = Category.all
