@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       @posts.push(s.post)
     end
 
-    @posts = @posts.sort! { |a,b| a.created_at <=> b.created_at }
+    @posts = @posts.sort! { |a,b| a.created_at.to_i <=> b.created_at.to_i }
     @posts = @posts.reverse
 
   end

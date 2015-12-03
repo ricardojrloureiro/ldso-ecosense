@@ -56,7 +56,9 @@
                           <% if post.ecological_issue %>
                               <p class="text-warning"><i class="fa fa-lg fa-exclamation-triangle"></i> Ecological Issue</p>
                           <% end %>
-                          <span class="meta"><%= post.company_id == 0 ? post.user.name : post.company.name%><%= ', ' + time_ago_in_words(post.created_at) + ' ago' %></span>
+                          <span class="meta"><%= post.company_id == 0 ? post.user.name : post.company.name %> ,
+                            <%= time_ago_in_words(post.created_at) + ' ago' %>
+                          </span>
                           <hr>
                         </header>
                         <div class="body">
