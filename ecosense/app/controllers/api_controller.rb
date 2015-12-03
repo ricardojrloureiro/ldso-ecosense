@@ -12,7 +12,12 @@ class ApiController < ApplicationController
       post[:comments].each do |comment|
         comment[:name] = User.find(comment['user_id']).name
       end
-      post[:image_url] = request.host + "/api/image/" + post['id'].to_s
+      if posts.find(post['id']).avatar.path(:medium).nil?
+        post[:image_url] = ""
+      else
+        post[:image_url] = "http://" + request.host + "/api/image/" + post['id'].to_s
+      end
+
     end
     render json: postsToReturn
   end
@@ -21,7 +26,7 @@ class ApiController < ApplicationController
     params[:post_id]
     imageLocation = Post.find(params[:post_id]).avatar.path(:medium)
     data = open(imageLocation)
-    send_file data, type: 'image/png', disposition: 'inline'
+    send_file data, type: 'image/jpeg', disposition: 'inline'
   end
 
 
