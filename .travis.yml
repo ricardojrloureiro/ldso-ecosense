@@ -1,6 +1,6 @@
 language: ruby
 rvm:
- - 2.2.3
+ - 2.2.1
 env:
   - DB=mysql
 before_install:
@@ -9,7 +9,7 @@ before_install:
   - gem install rails
   - gem install byebug
 before_script:
-  - bundle update
+  - bundle install
   - bundle exec rake db:create db:schema:load --trace
 script:
   - RAILS_ENV=test bundle exec rake db:migrate test

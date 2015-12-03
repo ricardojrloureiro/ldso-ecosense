@@ -52,13 +52,32 @@
   <div class="widewrapper subheader">
     <div class="container">
       <div class="tales-searchbox">
-        <form action="#" method="get" accept-charset="utf-8">
-          <button class="searchbutton" type="submit">
+
+        <div id="search-div" data-url="<%= users_path %>">
+          <button id=submit class="searchbutton" type="submit">
             <i class="fa fa-search"></i>
           </button>
           <input class="searchfield" id="searchbox" type="text" placeholder="Search">
-        </form>
+        </div>
+
       </div>
     </div>
   </div>
 </header>
+
+<script>
+  $("#submit").click(function(){
+    var data = $('#searchbox').val();
+
+    window.location.replace($("#search-div").data("url") + "?name=" + data);
+  });
+
+  $(document).keypress(function(e) {
+    if(e.which == 13) {
+      var data = $('#searchbox').val();
+      if(data != '')
+        if($('input').is(":focus"))
+            window.location.replace($("#search-div").data("url") + "?name=" + data);
+    }
+  });
+</script>
