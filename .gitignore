@@ -16,7 +16,6 @@ ecosense/log/*
 !ecosense/log/.keep
 ecosense/tmp
 
-*.lock
 
 .idea
 .vagrant
