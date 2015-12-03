@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
-  
+
   def posts
     posts = Post.all.reverse_order.eager_load(:user,:comments,:comments => :user)
     postsToReturn = posts.as_json
@@ -12,14 +12,23 @@ class ApiController < ApplicationController
       post[:comments].each do |comment|
         comment[:name] = User.find(comment['user_id']).name
       end
+      post[:image_url] = request.host + "/api/image/" + post['id'].to_s
     end
     render json: postsToReturn
   end
 
+  def image
+    params[:post_id]
+    imageLocation = Post.find(params[:post_id]).avatar.path(:medium)
+    data = open(imageLocation)
+    send_file data, type: 'image/png', disposition: 'inline'
+  end
+
+
   def create
     post = Post.new(post_params)
     post.user_id = params[:user_id]
-    params[:company_id] != 0 ? post.company_id=params[:company_id] : post.company_id = null
+    params[:company_id] != 0 ? post.company_id=params[:company_id] : post.company_id = 0
 
     if Company.where(:id => params[:company_id]).blank?
       render json: { success: false, msg: "Company not found." }

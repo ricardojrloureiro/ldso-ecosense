@@ -37,5 +37,6 @@ Rails.application.routes.draw do
   post 'api/posts', to: 'api#create'
   post 'api/posts/:id/like', to: 'api#like'
   post 'api/posts/:id/share', to: 'api#share'
+  get 'api/image/:post_id', to: 'api#image'
 
 end
