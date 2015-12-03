@@ -35,5 +35,7 @@ Rails.application.routes.draw do
   #api routes - mobile
   get 'api/posts', to: 'api#posts'
   post 'api/posts', to: 'api#create'
+  post 'api/posts/:id/like', to: 'api#like'
+  post 'api/posts/:id/share', to: 'api#share'
 
 end

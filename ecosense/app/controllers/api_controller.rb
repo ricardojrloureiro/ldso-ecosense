@@ -39,6 +39,39 @@ class ApiController < ApplicationController
 
   end
 
+  def like
+    post = Post.find(params[:id])
+    like = Like.where(post_id: post.id, user_id: params[:user_id])
+    if like.present?
+      like.destroy_all
+    else
+      like = Like.new
+      like.user_id = params[:user_id]
+      like.post_id = post.id
+      like.save
+    end
+    render json: { success: true, likes: pluralize(post.likes.count, 'like') }
+  end
+
+  def share
+    post = Post.find(params[:id])
+    share = Share.where(post_id: post.id, user_id: params[:user_id])
+    message = ''
+    if share.present?
+      share.destroy_all
+      message = 'removed shared post'
+    else
+      share = Share.new
+      share.user_id = params[:user_id]
+      share.post_id = post.id
+      share.save
+      message = 'shared post successfully'
+    end
+    render json: { success: true, message: message }
+
+  end
+
+
   def post_params
     params.permit(:title, :teaser, :content, :latitude, :longitude, :ecological_issue, :avatar)
   end
