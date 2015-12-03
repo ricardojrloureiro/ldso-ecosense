@@ -4,7 +4,22 @@ class CompaniesController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
 
   def index
+    search = params[:category]
+    if search == nil
+      search = ''
+    end
 
+    category = Category.where(name: search)
+
+    @companies = Company.joins(:categories).where(:categories => {:name => search})
+    @categories = Category.all
+
+  end
+
+  def show_specific
+    @company = Company.find(params[:id])
+    @categories = Category.all
+    render 'show'
   end
 
   def new
@@ -51,6 +66,7 @@ class CompaniesController < ApplicationController
   end
 
   def show
+    @categories = Category.all
     @company = Company.find(params[:id])
   end
 

@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     resources :companies
   end
 
+  get 'companies' => 'companies#index'
+  get 'companies/:id' => 'companies#show_specific'
+
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
