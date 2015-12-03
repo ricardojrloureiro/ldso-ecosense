@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   resources :categories
 
   #api routes - mobile
-  get 'api/Posts', to: 'api#posts'
-  post 'api/Posts', to: 'api#create'
+  get 'api/posts', to: 'api#posts'
+  post 'api/posts', to: 'api#create'
 
 end

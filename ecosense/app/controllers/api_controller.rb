@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
-
+  skip_before_filter :verify_authenticity_token
+  
   def posts
     posts = Post.all.reverse_order.eager_load(:user,:comments,:comments => :user)
     postsToReturn = posts.as_json
@@ -15,7 +16,31 @@ class ApiController < ApplicationController
   end
 
   def create
+    post = Post.new(post_params)
+    post.user_id = params[:user_id]
+    params[:company_id] != 0 ? post.company_id=params[:company_id] : post.company_id = null
 
+    if Company.where(:id => params[:company_id]).blank?
+      render json: { success: false, msg: "Company not found." }
+      return
+    end
+    if Company.find(params[:company_id]).user_id != post.user_id
+      render json: { success: false, msg: "Company given not valid." }
+      return
+    end
+
+
+    if post.valid?
+      post.save
+      render json: { success: true, msg: "Post created successfully." }
+    else
+      render json: {success: false, msg: post.errors}
+    end
+
+  end
+
+  def post_params
+    params.permit(:title, :teaser, :content, :latitude, :longitude, :ecological_issue, :avatar)
   end
 
 end
