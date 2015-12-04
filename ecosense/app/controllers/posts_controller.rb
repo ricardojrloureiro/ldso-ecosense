@@ -45,8 +45,11 @@ class PostsController < ApplicationController
         post.teaser = params[:teaser]
         post.title = params[:title]
 
-        post.save
-        render json: {success: true, msg: 'Post updated successfully.' }
+        if post.save
+          render json: { success: true, msg: 'Post edited successfully.' }
+        else
+          render json: {error: true, msg: 'Post contains errors.', errors: post.errors}
+        end
         return
       end
 

@@ -306,10 +306,15 @@
           if(data.success){
             location.reload();
           }else{
-            $("#edit_error").text(data.msg);
-
+            var errorMessage = data.msg + "<br>";
+            if(data.errors)
+            {
+              for (var errorKey in data.errors) {
+                errorMessage = errorMessage + " <br>" + errorKey + " "  + data.errors[errorKey];
+              }
+            }
+            $("#edit_error").html(errorMessage);
             $("#edit_error").toggle();
-
           }
         }
 
