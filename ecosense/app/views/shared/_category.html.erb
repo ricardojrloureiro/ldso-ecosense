@@ -7,7 +7,7 @@
     <div class="body clearfix">
       <ul class="tags">
         <% @categories.each do |category| %>
-            <li><a href="#"><%= category.name %></a></li>
+            <li><a href="/companies?category=<%=category.name%>"><%= category.name %></a></li>
         <% end  %>
       </ul>
     </div>
