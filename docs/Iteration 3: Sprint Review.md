@@ -2,7 +2,7 @@
 
 ## What has been done
 
-During this week's sprint the team was able to complete every single item from the Project Backlog that were intended for this specific sprint. The team completed all the estimated users stories for a total of 12 points, keeping the project in line with the initial plan.  As mentioned before this Sprint was a success meaning all the intended items were completed. Those being:
+During this week's sprint the team was able to complete every single item from the Project Backlog that were intended for this specific sprint. The team completed all the estimated users stories for a total of 10 points, keeping the project in line with the initial plan.  As mentioned before this Sprint was a success meaning all the intended items were completed. Those being:
 * As a company I can delete a post so that I can remove unwanted content.
 * As an administrator I can delete any content so that there is no inappropriate content.
 * As a company I can edit a post so that I can fix information.
