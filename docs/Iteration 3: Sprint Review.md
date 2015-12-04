@@ -1,0 +1,5 @@
+# Iteration 3: Sprint Review
+
+## What has been done
+
+During this week's sprint the team was able to complete every single item from the Project Backlog that were intended for this specific sprint. the team completed all the estimated users stories for a total of 12 points, keeping the project in line with the initial plan. the team completed all the estimated users stories for a total of 12 points, keeping the project in line with the initial plan. the team completed all the estimated users stories for a total of 12 points, keeping the project in line with the initial plan. the team completed all the estimated users stories for a total of 12 points, keeping the project in line with the initial plan. the team completed all the estimated users stories for a total of 12 points, keeping the project in line with the initial plan. the team completed all the estimated users stories for a total of 12 points, keeping the project in line with the initial plan. The team completed all the estimated users stories for a total of 12 points, keeping the project in line with the initial plan.
