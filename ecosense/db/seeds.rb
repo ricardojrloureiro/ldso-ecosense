@@ -13,4 +13,5 @@ user = User.new
 user.name = "Admin"
 user.email = "admin@admin.com"
 user.password = "123123"
+user.admin = 1
 user.save
