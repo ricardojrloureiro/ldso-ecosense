@@ -3,6 +3,7 @@ include ActionView::Helpers::TextHelper
 class PostsController < ApplicationController
 
   def new
+    @user = current_user
     @post = Post.new
   end
 
@@ -29,9 +30,14 @@ class PostsController < ApplicationController
     post = Post.new(post_params)
     post.user_id = current_user.id
     params[:post_as] != 0 ? post.company_id=params[:post_as] : post.company_id = null
-    post.save
-
-    # TODO: return on error
+    if post.save
+      flash[:success] = 'Your post was successfully created!'
+    else
+      flash[:error] = 'Your post seem to not have the required requisites'
+      @user = current_user
+      render 'new'
+      return
+    end
 
     redirect_to root_path
   end
