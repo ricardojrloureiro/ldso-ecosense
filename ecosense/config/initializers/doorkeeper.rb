@@ -12,6 +12,8 @@ Doorkeeper.configure do
     end
   end
 
+  access_token_expires_in 720.hours
+
 end
 
 
