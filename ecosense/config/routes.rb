@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  use_doorkeeper
   root             'static_pages#home'
   get 'help'    => 'static_pages#help'
   get 'about'   => 'static_pages#about'
@@ -41,5 +42,5 @@ Rails.application.routes.draw do
   post 'api/posts/:id/like', to: 'api#like'
   post 'api/posts/:id/share', to: 'api#share'
   get 'api/image/:post_id', to: 'api#image'
-
+  
 end

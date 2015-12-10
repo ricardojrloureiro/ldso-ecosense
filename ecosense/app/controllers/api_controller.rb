@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
-  skip_before_filter :verify_authenticity_token
+  before_action :doorkeeper_authorize!
 
   def posts
     posts = Post.all.reverse_order.eager_load(:user,:comments,:comments => :user)
