@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151210100918) do
+ActiveRecord::Schema.define(version: 20151215161453) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 255
@@ -129,6 +129,9 @@ ActiveRecord::Schema.define(version: 20151210100918) do
     t.integer  "avatar_file_size",    limit: 4
     t.datetime "avatar_updated_at"
     t.boolean  "admin",                             default: false
+    t.date     "birthday"
+    t.string   "residence",           limit: 255
+    t.string   "occupation",          limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

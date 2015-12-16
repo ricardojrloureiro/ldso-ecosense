@@ -19,6 +19,28 @@ module UsersHelper
     end
   end
 
+  def get_birthday(user)
+    if user.birthday.blank?
+      "n/a"
+    else
+      user.birthday
+    end
+  end
+  def get_residence(user)
+    if user.residence.blank?
+      "n/a"
+    else
+      user.residence
+    end
+  end
+  def get_occupation(user)
+    if user.occupation.blank?
+      "n/a"
+    else
+      user.occupation
+    end
+  end
+
   # Returns the User about
   def get_about(user)
     if user.about.blank?

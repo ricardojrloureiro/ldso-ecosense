@@ -1,52 +1,54 @@
 <div class="widewrapper main">
   <div class="container">
     <div class="row">
-      <div class="col-md-8 blog-main">
         <div class="row">
-              <div class="col-md-12" id="company_logo" >
+              <div class="col-md-10 col-md-offset-1" id="company_logo" >
               <div style="float:left">
                 <%= image_tag @user.avatar.url(:medium) %>
               </div>
               <div style="float:left; margin-left: 30px;">
-                <h2><%= @user.name %></h2>
+
+                <h2>
+                    <%= @user.name %>
+                    <% if(logged_in? && current_user.id == @user.id)  %>
+                      <a href="<%= edit_user_path %>">  - Edit </a>
+                    <% end %>
+                </h2>
+                <br>
                 <span>
                   Contact: <%= get_email(@user) %>
                 </span>
+                <br>
+                <span>
+                  Birthday: <%= get_birthday(@user) %>
+                </span>
+                <br>
+                <span>
+                  Residence: <%= get_residence(@user) %>
+                </span>
+                <br>
+                <span>
+                  Occupation: <%= get_occupation(@user) %>
+                </span>
               </div>
+
             </div>
         </div>
-
-        <div class="row horizontal-line">
-          <div class="horizontal-line"></div>
-        </div>
-
         <div class="row">
-          <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-4"><h3>About</h3></div>
+          <div class="col-md-10 col-md-offset-1">
+            <h3>About</h3>
+            <%= get_about(@user) %>
           </div>
-          <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <%= get_about(@user) %>
-            </div>
-          </div>
+
         </div>
-
-
-
-        <div class="row horizontal-line">
-          <div class="horizontal-line"></div>
-        </div>
-
-        <div class="row">
           <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-4"><h3>Posts</h3></div>
+            <div class="col-md-10 col-md-offset-1"><h3>Posts</h3></div>
           </div>
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <% @posts.each do |post| %>
                   <div class="row">
-                    <div class="col-md-1 col-sm-1"></div>
-                    <div class="col-md-10 col-sm-10">
+                    <div class="col-md-10 col-sm-10 col-md-offset-1">
                       <article class=" blog-teaser">
                         <header>
                           <% if post.user_id != @user.id %>
@@ -69,16 +71,12 @@
                         </div>
                       </article>
                     </div>
-                    <div class="col-md-1 col-sm-1"></div>
                   </div>
               <% end %>
             </div>
-          </div>
+
         </div>
       </div>
 
-      <%= render 'shared/category' %>
-
-    </div>
   </div>
 </div>

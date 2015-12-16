@@ -14,9 +14,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @categories = Category.all
-
-
     @posts = []
     @user.posts.each do |p|
       @posts.push(p)
@@ -72,7 +69,10 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :phone_number, :mobile_number, :about, :avatar, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :phone_number, :mobile_number,
+                                   :about, :avatar, :password, :password_confirmation,
+                                   :birthday, :occupation, :residence
+      )
     end
 
     # Confirms a logged-in user.
