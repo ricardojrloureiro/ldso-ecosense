@@ -18,7 +18,7 @@ class CompaniesController < ApplicationController
 
   def show_specific
     @company = Company.find(params[:id])
-    @categories = Category.all
+    @categories = @company.categories
     render 'show'
   end
 
@@ -35,6 +35,7 @@ class CompaniesController < ApplicationController
       params[:categories].each do |category|
         @company.categories << Category.find(category)
       end
+      @company.categories_count =params[:categories].count
 
       flash.now[:success] = "Company created successfully"
       redirect_to user_company_path :id => @company.id
@@ -57,6 +58,7 @@ class CompaniesController < ApplicationController
       params[:categories].each do |category|
         @company.categories << Category.find(category)
       end
+      @company.categories_count =params[:categories].count
 
       flash[:success] = "Your company profile was successfully updated!"
       redirect_to user_company_path
@@ -66,8 +68,8 @@ class CompaniesController < ApplicationController
   end
 
   def show
-    @categories = Category.all
     @company = Company.find(params[:id])
+    @categories = @company.categories
   end
 
 

@@ -15,4 +15,8 @@ class Company < ActiveRecord::Base
   has_attached_file :avatar, styles: { medium: "200x200>", thumb: "100x100>" }, default_url: "http://www.caxtoneditorial.co.uk/en/wp-content/uploads/2012/02/User.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
+  def self.get_top_companies
+    Company.all.order(categories_count: :desc).limit(5)
+  end
+
 end
