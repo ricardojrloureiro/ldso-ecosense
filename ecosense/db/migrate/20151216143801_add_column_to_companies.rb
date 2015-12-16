@@ -11,5 +11,4 @@ class AddColumnToCompanies < ActiveRecord::Migration
     end
   end
 
-
 end
