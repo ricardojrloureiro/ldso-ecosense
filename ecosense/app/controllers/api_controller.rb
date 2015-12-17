@@ -16,7 +16,7 @@ class ApiController < ApplicationController
       if posts.find(post['id']).avatar.path(:medium).nil?
         post[:image_url] = ""
       else
-        post[:image_url] = "http://" + request.host + "/api/image/" + post['id'].to_s
+        post[:image_url] = posts.find(post['id']).avatar.url(:medium)
       end
 
     end
