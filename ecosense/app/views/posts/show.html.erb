@@ -31,7 +31,15 @@
 
                 <div class="author">
                   <i class="fa fa-user"></i>
-                  <span class="data"><%= @post.user.name %></span>
+                 <span> <% if @post.company_id == 0 %>
+                      <%= @post.user.name %>
+                  <% else %>
+                      <%=  @post.company.name%>
+                      <% if @post.company.approved %>
+                          <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"> </span>
+                      <% end %>
+                  <% end %>
+                   </span>
                 </div>
                 <div class="date">
                   <i class="fa fa-calendar"></i>
