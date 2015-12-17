@@ -31,6 +31,7 @@ class CompaniesController < ApplicationController
     @company = Company.new(company_params)
     @categories = Category.all
     @company.user_id = current_user.id
+    @company.save!
     if @company.save
       params[:categories].each do |category|
         @company.categories << Category.find(category)
@@ -40,6 +41,8 @@ class CompaniesController < ApplicationController
       flash.now[:success] = "Company created successfully"
       redirect_to user_company_path :id => @company.id
     else
+      @company = Company.new
+      @categories = Category.all  
       render 'new'
     end
 
