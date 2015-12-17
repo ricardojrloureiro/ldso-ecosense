@@ -29,6 +29,33 @@
 
         <% end %>
 
+
+        <% @companies.each do |company| %>
+
+            <div class="row">
+              <div class="col-md-1 col-sm-1"></div>
+              <div class="col-md-10 col-sm-10">
+                <a href="companies/<%=company.id%>"><article class=" blog-teaser">
+                  <header>
+                    <%= company.name %>
+                  </header>
+                  <div id=image style="float:left" style="max-width: 100px;max-height: 100px;">
+                    <%= image_tag company.avatar.url(:thumb) %>
+                  </div>
+                  <br>
+                  <div class="body" style="margin-left:20%;">
+                    <%= company.about %>
+                  </div>
+                  <div class="clearfix">
+                  </div>
+                </article>
+                </a>
+              </div>
+              <div class="col-md-1 col-sm-1"></div>
+            </div>
+
+        <% end %>
+
       </div>
       <%= render 'shared/category' %>
 

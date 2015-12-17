@@ -9,6 +9,7 @@ class UsersController < ApplicationController
       search = ''
     end
     @users = User.where('name LIKE ?','%'+search+'%')
+    @companies = Company.where('name LIKE ?','%'+search+'%')
     @categories = Category.all
   end
 
