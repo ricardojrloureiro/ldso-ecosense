@@ -86,6 +86,10 @@ class ApiController < ApplicationController
 
   end
 
+  def top_companies
+    render json: Company.get_top_companies
+  end
+
 
   def post_params
     params.permit(:title, :teaser, :content, :latitude, :longitude, :ecological_issue, :avatar)
