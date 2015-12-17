@@ -40,6 +40,8 @@ class CompaniesController < ApplicationController
       flash.now[:success] = "Company created successfully"
       redirect_to user_company_path :id => @company.id
     else
+      @company = Company.new
+      @categories = Category.all  
       render 'new'
     end
 
