@@ -15,7 +15,11 @@
           <ul class="tales-list">
           <% Company.get_top_companies.each do |company| %>
 
-            <li><%= company.name %></li>
+            <li>
+              <a href="<%= user_company_path(:id => company.id,:user_id => company.user_id) %>">
+                <%= company.name %>
+            </a>
+            </li>
 
           <% end %>
           </ul>
