@@ -16,7 +16,7 @@ class Company < ActiveRecord::Base
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   def self.get_top_companies
-    Company.all.order(categories_count: :desc).limit(5)
+    Company.all.where(approved: 1).order(categories_count: :desc).limit(5)
   end
 
 end
