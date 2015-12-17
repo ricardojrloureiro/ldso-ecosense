@@ -40,6 +40,7 @@ gem 'gmaps4rails'
 gem 'doorkeeper'
 
 gem 'devise'
+gem 'aws-sdk'
 
 
 # Use Unicorn as the app server
