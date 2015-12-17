@@ -31,6 +31,7 @@ class CompaniesController < ApplicationController
     @company = Company.new(company_params)
     @categories = Category.all
     @company.user_id = current_user.id
+    @company.save!
     if @company.save
       params[:categories].each do |category|
         @company.categories << Category.find(category)
