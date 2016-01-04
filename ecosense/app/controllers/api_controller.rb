@@ -25,7 +25,8 @@ class ApiController < ApplicationController
 
   def image
     params[:post_id]
-    imageLocation = Post.find(params[:post_id]).avatar.path(:medium)
+    imageLocation = Post.find(params[:post_id]).avatar.path(:medium
+    return imageLocation
     data = open(imageLocation)
     send_file data, type: 'image/jpeg', disposition: 'inline'
   end
