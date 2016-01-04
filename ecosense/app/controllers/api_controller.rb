@@ -7,7 +7,7 @@ class ApiController < ApplicationController
     postsToReturn = posts.as_json
 
     postsToReturn.each do |post|
-      post[:name] = posts.find(post['id']).user.name
+      post[:name] = post['company_id'] != 0 ?  posts.find(post['id']).company.name : posts.find(post['id']).user.name
       post[:likes] = posts.find(post['id']).likes.count
       post[:comments] = posts.find(post['id']).comments.as_json
       post[:comments].each do |comment|
