@@ -90,7 +90,22 @@ class ApiController < ApplicationController
   end
 
   def top_companies
-    render json: Company.get_top_companies
+    companies = Company.get_top_companies
+
+    top_companies = []
+    companies.each do |company|
+      img = company.avatar.path(:medium).nil? ? "" : company.avatar.url(:medium)
+      top_companies.push({
+                             id: company.id,
+                            user_id: company.user_id,
+                            name: company.name,
+                            approved: company.approved,
+                            categories_count: company.categories_count,
+                            image_url:img
+                         })
+    end
+
+    render json: top_companies
   end
 
 
