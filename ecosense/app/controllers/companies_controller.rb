@@ -40,7 +40,7 @@ class CompaniesController < ApplicationController
       @company.categories_count =params[:categories].count
 
       flash.now[:success] = "Company created successfully"
-      redirect_to user_company_path :id => @company.id
+      redirect_to user_company_path id: @company.id
     else
       @company = Company.new
       @categories = Category.all  
@@ -74,6 +74,7 @@ class CompaniesController < ApplicationController
   def show
     @company = Company.find(params[:id])
     @categories = @company.categories
+    @posts = Post.where(company_id: @company.id)
   end
 
 
