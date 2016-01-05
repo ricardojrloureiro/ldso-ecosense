@@ -19,6 +19,7 @@ class CompaniesController < ApplicationController
   def show_specific
     @company = Company.find(params[:id])
     @categories = @company.categories
+    @posts = Post.where(company_id: @company.id)
     render 'show'
   end
 
