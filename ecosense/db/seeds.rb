@@ -1,8 +1,8 @@
 categories_list = [
-    [ "Category 1"],
-    [ "Category 2" ],
-    [ "Category 3" ],
-    [ "Category 4" ]
+    [ "Eco Sustainability"],
+    [ "Resources" ],
+    [ "Awareness" ],
+    [ "Social Responsibility" ]
 ]
 
 categories_list.each do |category|
